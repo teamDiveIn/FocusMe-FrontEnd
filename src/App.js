@@ -1,3 +1,4 @@
+import { message } from 'antd'
 import { BrowserRouter, Switch } from 'react-router-dom'
 import { PublicRoute } from './components/routes'
 import HomePage from './pages/Home'
@@ -5,6 +6,11 @@ import LoginPage from './pages/Login'
 import RegisterPage from './pages/Register'
 
 function App() {
+  message.config({
+    duration: 1,
+    maxCount: 1,
+  })
+
   return (
     <BrowserRouter>
       <Switch>
