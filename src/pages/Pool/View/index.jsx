@@ -1,9 +1,9 @@
 import * as B from 'src/components'
 
-const HomePage = () => {
+const PoolViewPage = () => {
   return <B.BaseTemplate>
     
   </B.BaseTemplate>
 }
 
-export default HomePage
+export default PoolViewPage

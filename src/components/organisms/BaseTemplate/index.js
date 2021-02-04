@@ -3,12 +3,13 @@ import { Layout } from 'antd'
 import * as S from './style'
 import { Link } from 'react-router-dom'
 import { BaseLogo } from 'src/components/atoms/BaseLogo'
+import theme from 'src/styles/theme'
 
 export const BaseTemplate = ({
   children,
   narrow = false,
   noPadding = false,
-  backgroundColor = '#FFFFFF',
+  backgroundColor = theme.primaryOverlay,
   headerBackgroundColor,
   verticalCenter,
 }) => {
