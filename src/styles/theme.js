@@ -1,7 +1,8 @@
 const theme = {
-  primary: '#0055B8',
-  primaryLight: '#C5D8EF',
-  secondary: '#F9B19B',
+  primary: '#3887FE',
+  primaryLight: '#5EB2FF',
+  primaryDark: '#032642',
+  primaryOverlay: '#001B2E',
 
   text: '#1A1311',
   subText: '#707070',
@@ -9,7 +10,7 @@ const theme = {
 
   background: '#FFFFFF',
   card: '#FAFAFA',
-  disabled: '#E7E7E7',
+  disabled: '#CACACA',
 
   success: '#52C41A',
   warning: '#FAAD14',
@@ -21,8 +22,6 @@ const theme = {
   medium: 14,
   big: 16,
   huge: 18,
-
-  primaryDark: '',
 
   headerHeight: 64,
 }

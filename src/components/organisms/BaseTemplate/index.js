@@ -1,23 +1,26 @@
 import React from 'react'
 import { Layout } from 'antd'
 import * as S from './style'
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { BaseLogo } from 'src/components/atoms/BaseLogo'
 
 export const BaseTemplate = ({
   children,
   narrow = false,
   noPadding = false,
   backgroundColor = '#FFFFFF',
+  headerBackgroundColor,
+  verticalCenter,
 }) => {
-  console.log(children)
   return (
     <Layout style={{ backgroundColor }}>
       <S.StyledHeaderWrapper>
-        <S.StyledHeader>
-          <S.StyledHeaderBox></S.StyledHeaderBox>
-          <div>{/* <Link to="/">
-              <B.BaseLogo />
-            </Link> */}</div>
+        <S.StyledHeader backgroundcolor={headerBackgroundColor}>
+          <div>
+            <Link to="/">
+              <BaseLogo />
+            </Link>
+          </div>
 
           {/* <S.StyledHeaderBox>
             <B.TextRight>
@@ -32,6 +35,7 @@ export const BaseTemplate = ({
       <S.StyledContent
         narrow={narrow ? 'true' : undefined}
         nopadding={noPadding ? 'true' : undefined}
+        verticalcenter={verticalCenter ? 'true' : undefined}
       >
         {children}
       </S.StyledContent>
