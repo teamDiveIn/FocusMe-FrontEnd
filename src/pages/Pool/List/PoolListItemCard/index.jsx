@@ -3,7 +3,7 @@ import * as B from 'src/components'
 import theme from 'src/styles/theme'
 export const PoolListItemCard = () => {
   return (
-    <B.BaseCard radius="5px">
+    <B.BaseCard radius="5px" clickable onClick={() => console.log('클릭!')}>
       <B.Box display="flex" justify="space-between" align="center">
         <B.Box>
           <B.BaseText block size="big">
