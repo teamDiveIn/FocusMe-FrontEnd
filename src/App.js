@@ -6,9 +6,9 @@ import LoginPage from './pages/Login'
 import RegisterPage from './pages/Register'
 import MyPage from './pages/MyPage'
 import NewPool from './pages/NewPool'
-import PoolList from './pages/PoolList'
 import RegisterCompletePage from './pages/Register/Complete'
 import PoolViewPage from './pages/Pool/View'
+import PoolListPage from './pages/Pool/List'
 
 function App() {
   message.config({
@@ -24,9 +24,9 @@ function App() {
         <PublicRoute path="/register" component={RegisterPage} />
         <PublicRoute path="/mypage" component={MyPage} />
         <PublicRoute path="/newpool" component={NewPool} />
-        <PublicRoute path="/poolist" component={PoolList} />
         <PublicRoute path="/pool/view/:id" component={PoolViewPage} />
         <PublicRoute path="/pool/view" component={PoolViewPage} /> {/* 퍼블리싱용 */}
+        <PublicRoute path="/pool/list" component={PoolListPage} />
         <PublicRoute path="/" component={HomePage} />
       </Switch>
     </BrowserRouter>
