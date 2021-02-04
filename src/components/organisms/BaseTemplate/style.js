@@ -12,7 +12,7 @@ export const StyledHeader = styled(Header)`
   left: 0;
   right: 0%;
   top: 0;
-  background-color: white;
+  background-color: ${(props) => (props.backgroundcolor ? props.backgroundcolor : 'white')};
   padding: 0 20px;
   z-index: 1;
 

@@ -8,12 +8,12 @@ export const BaseTemplate = ({
   narrow = false,
   noPadding = false,
   backgroundColor = '#FFFFFF',
+  headerBackgroundColor = '#FFFFFF',
 }) => {
-  console.log(children)
   return (
     <Layout style={{ backgroundColor }}>
       <S.StyledHeaderWrapper>
-        <S.StyledHeader>
+        <S.StyledHeader backgroundcolor={headerBackgroundColor}>
           <S.StyledHeaderBox></S.StyledHeaderBox>
           <div>{/* <Link to="/">
               <B.BaseLogo />

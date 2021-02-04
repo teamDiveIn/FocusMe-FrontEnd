@@ -1,47 +1,59 @@
 import * as B from 'src/components'
 import React from 'react'
-import { Form, Input, Button } from 'antd'
+import { Row, Col, Input, Button } from 'antd'
 import { useController } from './contoller'
 import { Link } from 'react-router-dom'
+import theme from 'src/styles/theme'
+import { lighten } from 'polished'
+import * as S from './style'
 
 const RegisterPage = () => {
   const { form, onSubmit } = useController()
 
   return (
-    <B.BaseTemplate narrow>
-      <B.BaseText size={20} mb={2} block>
-        안녕하세요.
-        <br />
-        <B.BaseText type="primary" bold>
-          FocusOnMe
-        </B.BaseText>
-        에 오신 걸 환영합니다!
-      </B.BaseText>
-      <B.BaseForm form={form} onFinish={onSubmit} layout="vertical">
-        <Form.Item name="name" label="이름">
-          <Input />
-        </Form.Item>
-        <Form.Item name="nickname" label="닉네임">
-          <Input />
-        </Form.Item>
-        <Form.Item name="password" label="비밀번호">
-          <Input.Password />
-        </Form.Item>
-        <B.Box>
-          <B.TextCenter>
-            <Button type="primary" block htmlType="submit">
+    <B.BaseTemplate backgroundColor={theme.primaryDark} headerBackgroundColor={theme.primaryDark}>
+      <B.Box mtb={6} mlr={4}>
+        <B.BaseCard backgroundColor={lighten(0.1, theme.primaryOverlay)}>
+          <B.Box p={2}>
+            <B.BaseText type="white" size={24} block mb={4}>
               회원가입
-            </Button>
-          </B.TextCenter>
-        </B.Box>
-        <B.Box mtb={2}>
-          <B.TextCenter>
-            <Link to="/login">
-              <B.BaseText underline>혹시 이미 계정이 있으신가요?</B.BaseText>
-            </Link>
-          </B.TextCenter>
-        </B.Box>
-      </B.BaseForm>
+            </B.BaseText>
+
+            <B.BaseForm form={form} onFinish={onSubmit}>
+              <Row gutter={20}>
+                <Col sm={14}>
+                  <S.StyledFormItem name="name" label="이름">
+                    <Input />
+                  </S.StyledFormItem>
+                  <S.StyledFormItem name="nickname" label="닉네임">
+                    <Input />
+                  </S.StyledFormItem>
+                  <S.StyledFormItem name="password" label="비밀번호">
+                    <Input.Password />
+                  </S.StyledFormItem>
+                </Col>
+                <Col sm={10}>
+                  <B.TextCenter>
+                    <img src="/images/avatar.png" alt="avater" width={140} />
+                    <B.Box mtb={2}>
+                      <Button ghost>프로필 업로드</Button>
+                    </B.Box>
+                  </B.TextCenter>
+                </Col>
+              </Row>
+              <B.Box mt={4}>
+                <B.TextRight>
+                  <Button type="primary" htmlType="submit">
+                    <B.BaseText bold plr={4}>
+                      가입하기
+                    </B.BaseText>
+                  </Button>
+                </B.TextRight>
+              </B.Box>
+            </B.BaseForm>
+          </B.Box>
+        </B.BaseCard>
+      </B.Box>
     </B.BaseTemplate>
   )
 }
