@@ -1,6 +1,6 @@
 import styled from 'styled-components'
-import { gutterMargin, gutterPadding, mediaGutter, mediaHidden } from '../../styles/styled.css'
-import { isNumber } from '../../utils'
+import { gutterMargin, gutterPadding, mediaGutter, mediaHidden } from '../../../styles/styled.css'
+import { isNumber } from '../../../utils'
 
 export const Box = styled.div`
   && {
