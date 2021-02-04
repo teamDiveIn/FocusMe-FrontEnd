@@ -12,7 +12,7 @@ export const StyledHeader = styled(Header)`
   left: 0;
   right: 0%;
   top: 0;
-  background-color: ${(props) => (props.backgroundcolor ? props.backgroundcolor : '#063A64')};
+  background-color: ${(props) => (props.backgroundcolor ? props.backgroundcolor : '#032642')}; // #063A64 , #032642
   padding: 0 20px;
   z-index: 1;
 
