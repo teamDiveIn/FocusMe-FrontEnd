@@ -1,4 +1,3 @@
-import * as B from 'src/components'
 import { Form, Input, Button, Checkbox } from 'antd';
 
 const layout = {
