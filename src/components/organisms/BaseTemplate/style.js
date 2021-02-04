@@ -12,9 +12,11 @@ export const StyledHeader = styled(Header)`
   left: 0;
   right: 0%;
   top: 0;
-  background-color: white;
+  background-color: ${(props) => (props.backgroundcolor ? props.backgroundcolor : '#063A64')};
   padding: 0 20px;
   z-index: 1;
+
+  box-shadow: 0px 25px 10px -20px rgba(0, 0, 0, 0.25);
 
   ${(props) => (props.noheadershadow ? `` : `border-bottom: 1px solid rgba(0, 0, 0, 0.05);`)}
 
@@ -28,11 +30,18 @@ export const StyledHeaderBox = styled.div`
 `
 
 export const StyledContent = styled(Content)`
-  min-height: 100vh;
+  min-height: calc(100vh - ${(props) => props.theme.headerHeight}px);
   width: ${(props) => (props.narrow ? '440px' : '1000px')};
   max-width: 100%;
   padding: ${(props) => (props.nopadding ? '0px' : '20px')};
   margin: 0 auto;
+
+  ${(props) =>
+    props.verticalcenter &&
+    `
+      display:flex;
+      align-items: center;
+  `}
 `
 
 export const StyledDrawer = styled(Drawer)`
