@@ -1,5 +1,5 @@
 import * as B from 'src/components'
-import React, { useState } from 'react';
+import React, { useState } from 'react'
 import {
   Form,
   Input,
@@ -11,46 +11,30 @@ import {
   InputNumber,
   TreeSelect,
   Switch,
-} from 'antd';
+} from 'antd'
+import { useController } from './contoller'
 
 const RegisterPage = () => {
-    const [componentSize, setComponentSize] = useState('default');
-
-    const onFormLayoutChange = ({ size }) => {
-      setComponentSize(size);
-    };
+  const { form, onSubmit } = useController()
 
   return (
-    <>
-      <Form
-        labelCol={{
-          span: 4,
-        }}
-        wrapperCol={{
-          span: 14,
-        }}
-        layout="horizontal"
-        initialValues={{
-          size: componentSize,
-        }}
-        onValuesChange={onFormLayoutChange}
-        size={componentSize}
-      >
-        <Form.Item label="Name">
+    <B.BaseTemplate>
+      <B.BaseForm form={form} onFinish={onSubmit}>
+        <Form.Item name="name" label="이름">
           <Input />
         </Form.Item>
-        <Form.Item label="Email">
+        <Form.Item label="닉네임">
           <Input />
         </Form.Item>
-        <Form.Item label="Password">
-          <Input />
+        <Form.Item label="비밀번호">
+          <Input.Password />
         </Form.Item>
-        <Form.Item label=" ">
+        <B.Box>
           <Button>Create Account</Button>
-        </Form.Item>
-      </Form>
-    </>
-  );
+        </B.Box>
+      </B.BaseForm>
+    </B.BaseTemplate>
+  )
 }
 
 export default RegisterPage
