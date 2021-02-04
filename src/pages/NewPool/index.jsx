@@ -1,5 +1,5 @@
 import * as B from 'src/components'
-import { Input, Button, Radio, Slider } from 'antd'
+import { Input, Button, Slider } from 'antd'
 import { useController } from './contoller'
 import theme from 'src/styles/theme'
 import * as S from './style'
@@ -12,15 +12,12 @@ const NewPool = () => {
   return (
     <B.BaseTemplate backgroundColor={theme.primaryOverlay} verticalCenter>
       <B.Box mlr={4} width={990}>
-        <Fade bottom distance="20px" delay={150}>
+        <Fade bottom distance="20px" delay={50}>
           <B.BaseCard backgroundColor={theme.primaryDark} shadow>
             <B.Box p={2}>
               <div style={{ marginBottom: '20px' }}>
                 <B.BaseText type="white" size={36} mb={4} style={{ marginRight: '20px' }}>
                   POOL 만들기
-                </B.BaseText>
-                <B.BaseText type="white" size={18} mb={4}>
-                  1개 이상 골라주세요
                 </B.BaseText>
               </div>
 
@@ -104,15 +101,17 @@ const NewPool = () => {
           </B.BaseCard>
         </Fade>
 
-        <B.Box mt={4}>
-          <B.TextRight>
-            <Button type="primary" htmlType="submit" style={{ height: 50 }}>
-              <B.BaseText bold plr={4}>
-                가입하기
-              </B.BaseText>
-            </Button>
-          </B.TextRight>
-        </B.Box>
+        <Fade bottom distance="20px" delay={250}>
+          <B.Box mt={4}>
+            <B.TextRight>
+              <Button type="primary" htmlType="submit" style={{ height: 50 }}>
+                <B.BaseText bold plr={4}>
+                  풀 만들기
+                </B.BaseText>
+              </Button>
+            </B.TextRight>
+          </B.Box>
+        </Fade>
       </B.Box>
     </B.BaseTemplate>
   )
