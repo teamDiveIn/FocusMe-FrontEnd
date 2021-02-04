@@ -14,7 +14,7 @@ const NewPool = () => {
     const value = 0;
 
     return <B.BaseTemplate backgroundColor={theme.primaryOverlay} verticalCenter>
-        <B.Box mlr={4} width="100%">
+        <B.Box mlr={4} width={990}>
             <Fade bottom distance="20px" delay={150}>
                 <B.BaseCard backgroundColor={theme.primaryDark} shadow>
                     <B.Box p={2}>
