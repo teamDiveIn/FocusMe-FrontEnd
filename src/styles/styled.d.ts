@@ -3,9 +3,14 @@ import 'styled-components'
 declare module 'styled-components' {
   export interface DefaultTheme {
     primary: string
+    primaryLight: string
+    primaryDark: string
+    primaryOverlay: string
+
     text: string
     subText: string
     optionalText: string
+
     background: string
     card: string
     disabled: string
@@ -20,10 +25,6 @@ declare module 'styled-components' {
     medium: number
     big: number
     huge: number
-
-    primaryLight: string
-    primaryDark: string
-    secondary: string
 
     headerHeight: number
   }
