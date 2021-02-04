@@ -1,7 +1,8 @@
 import React from 'react'
 import { Layout } from 'antd'
 import * as S from './style'
-// import { Link } from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import { BaseLogo } from 'src/components/atoms/BaseLogo'
 
 export const BaseTemplate = ({
   children,
@@ -14,10 +15,11 @@ export const BaseTemplate = ({
     <Layout style={{ backgroundColor }}>
       <S.StyledHeaderWrapper>
         <S.StyledHeader backgroundcolor={headerBackgroundColor}>
-          <S.StyledHeaderBox></S.StyledHeaderBox>
-          <div>{/* <Link to="/">
-              <B.BaseLogo />
-            </Link> */}</div>
+          <div>
+            <Link to="/">
+              <BaseLogo />
+            </Link>
+          </div>
 
           {/* <S.StyledHeaderBox>
             <B.TextRight>
