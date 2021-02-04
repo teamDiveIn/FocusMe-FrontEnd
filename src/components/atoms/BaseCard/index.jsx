@@ -25,9 +25,10 @@ const StyledCard = styled(Card)`
     props.clickable &&
     `
       cursor: pointer;
-      transition: box-shadow 0.2s;
-      &:hover{
-        box-shadow: 0px 25px 15px -10px rgba(0,0,0,0.25);
+      transition: box-shadow 0.2s, transform 0.2s;
+      &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0px 20px 20px -5px rgba(0,0,0,0.3);
       }
   `}
 `

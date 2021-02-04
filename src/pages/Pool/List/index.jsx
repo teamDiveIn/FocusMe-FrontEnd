@@ -19,6 +19,10 @@ const PoolListPage = () => {
               </B.BaseText>
 
               <PoolListItemCard />
+              <PoolListItemCard />
+              <PoolListItemCard />
+              <PoolListItemCard />
+              <PoolListItemCard />
             </B.Box>
           </B.BaseCard>
         </Fade>
