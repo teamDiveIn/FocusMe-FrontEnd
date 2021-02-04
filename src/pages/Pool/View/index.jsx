@@ -28,6 +28,8 @@ const PoolViewPage = () => {
           <PoolCamCard />
         </S.StyledCardWrapper>
       </S.StyledCardContainer>
+
+      <S.StyledFooter>Hi Faker</S.StyledFooter>
     </B.BaseTemplate>
   )
 }
