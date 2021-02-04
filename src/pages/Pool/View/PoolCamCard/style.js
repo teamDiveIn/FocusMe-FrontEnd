@@ -27,7 +27,7 @@ export const StyledFooter = styled.div`
   padding: 20px;
 `
 
-export const StyledSlider = styled.div`
+export const StyledSlider = styled.footer`
   background-color: ${(props) => props.theme.primary};
   height: 16px;
   width: 100%;
