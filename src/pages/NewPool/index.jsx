@@ -18,18 +18,20 @@ const NewPool = () => {
             <Fade bottom distance="20px" delay={150}>
                 <B.BaseCard backgroundColor={theme.primaryDark} shadow>
                     <B.Box p={2}>
-                        <B.BaseText type="white" size={36} block mb={4}>
+                        <div style={{marginBottom:"20px"}}>
+                        <B.BaseText type="white" size={36}  mb={4} style={{marginRight:"20px"}}>
                             POOL 만들기
-              </B.BaseText>
-                        <B.BaseText type="white" size={18} block mb={4}>
+                        </B.BaseText>
+                        <B.BaseText type="white" size={18}  mb={4}>
                             1개 이상 골라주세요
-              </B.BaseText>
+                        </B.BaseText>
+                        </div>
 
                         <B.BaseForm form={form} onFinish={onSubmit}>
                             <B.Box display="flex">
                                 <B.Box style={{ flex: '1 1 auto' }}>
                                     <S.StyledFormItem name="poolname" label="Pool 이름">
-                                        <Input style={{ height: "58px" }} />
+                                        <Input style={{ height: "58px", borderRadius: "8px" }} />
                                     </S.StyledFormItem>
                                     <S.StyledFormItem name="poolmode" label="Pool 모드">
                                         <Radio.Group defaultValue="a" size="large">
