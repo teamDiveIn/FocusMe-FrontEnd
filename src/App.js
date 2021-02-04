@@ -6,6 +6,7 @@ import LoginPage from './pages/Login'
 import RegisterPage from './pages/Register'
 import MyPage from './pages/MyPage'
 import NewPool from './pages/NewPool'
+import RegisterCompletePage from './pages/Register/Complete'
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
     <BrowserRouter>
       <Switch>
         <PublicRoute path="/login" component={LoginPage} />
+        <PublicRoute path="/register/complete" component={RegisterCompletePage} />
         <PublicRoute path="/register" component={RegisterPage} />
         <PublicRoute path="/mypage" component={MyPage} />
         <PublicRoute path="/newpool" component={NewPool} />
