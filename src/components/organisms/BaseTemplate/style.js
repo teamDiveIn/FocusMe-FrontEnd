@@ -12,9 +12,11 @@ export const StyledHeader = styled(Header)`
   left: 0;
   right: 0%;
   top: 0;
-  background-color: ${(props) => (props.backgroundcolor ? props.backgroundcolor : 'white')};
+  background-color: ${(props) => (props.backgroundcolor ? props.backgroundcolor : '#063A64')};
   padding: 0 20px;
   z-index: 1;
+
+  box-shadow: 0px 25px 10px -20px rgba(0, 0, 0, 0.25);
 
   ${(props) => (props.noheadershadow ? `` : `border-bottom: 1px solid rgba(0, 0, 0, 0.05);`)}
 

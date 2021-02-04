@@ -9,11 +9,8 @@ const RegisterPage = () => {
   const { form, onSubmit } = useController()
 
   return (
-    <B.BaseTemplate
-      backgroundColor={theme.primaryOverlay}
-      headerBackgroundColor={theme.primaryOverlay}
-    >
-      <B.Box mtb={6} mlr={4}>
+    <B.BaseTemplate backgroundColor={theme.primaryOverlay}>
+      <B.Box mtb={10} mlr={4}>
         <B.BaseCard backgroundColor={theme.primaryDark} shadow>
           <B.Box p={2}>
             <B.BaseText type="white" size={24} block mb={4}>

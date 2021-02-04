@@ -8,7 +8,7 @@ export const BaseTemplate = ({
   narrow = false,
   noPadding = false,
   backgroundColor = '#FFFFFF',
-  headerBackgroundColor = '#FFFFFF',
+  headerBackgroundColor,
 }) => {
   return (
     <Layout style={{ backgroundColor }}>
