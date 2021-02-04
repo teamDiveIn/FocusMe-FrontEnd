@@ -19,15 +19,15 @@ const RegisterPage = () => {
         <Form.Item name="name" label="이름">
           <Input />
         </Form.Item>
-        <Form.Item label="닉네임">
+        <Form.Item name="nickname" label="닉네임">
           <Input />
         </Form.Item>
-        <Form.Item label="비밀번호">
+        <Form.Item name="password" label="비밀번호">
           <Input.Password />
         </Form.Item>
         <B.Box>
           <B.TextCenter>
-            <Button type="primary" block>
+            <Button type="primary" block htmlType="submit">
               회원가입
             </Button>
           </B.TextCenter>
