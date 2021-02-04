@@ -2,18 +2,19 @@ import * as B from 'src/components'
 import React from 'react'
 import { Row, Col, Input, Button } from 'antd'
 import { useController } from './contoller'
-import { Link } from 'react-router-dom'
 import theme from 'src/styles/theme'
-import { lighten } from 'polished'
 import * as S from './style'
 
 const RegisterPage = () => {
   const { form, onSubmit } = useController()
 
   return (
-    <B.BaseTemplate backgroundColor={theme.primaryDark} headerBackgroundColor={theme.primaryDark}>
+    <B.BaseTemplate
+      backgroundColor={theme.primaryOverlay}
+      headerBackgroundColor={theme.primaryOverlay}
+    >
       <B.Box mtb={6} mlr={4}>
-        <B.BaseCard backgroundColor={lighten(0.1, theme.primaryOverlay)}>
+        <B.BaseCard backgroundColor={theme.primaryDark} shadow>
           <B.Box p={2}>
             <B.BaseText type="white" size={24} block mb={4}>
               회원가입
