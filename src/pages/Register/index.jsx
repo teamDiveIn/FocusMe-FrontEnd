@@ -1,25 +1,21 @@
 import * as B from 'src/components'
-import React, { useState } from 'react'
-import {
-  Form,
-  Input,
-  Button,
-  Radio,
-  Select,
-  Cascader,
-  DatePicker,
-  InputNumber,
-  TreeSelect,
-  Switch,
-} from 'antd'
+import React from 'react'
+import { Form, Input, Button } from 'antd'
 import { useController } from './contoller'
 
 const RegisterPage = () => {
   const { form, onSubmit } = useController()
 
   return (
-    <B.BaseTemplate>
-      <B.BaseForm form={form} onFinish={onSubmit}>
+    <B.BaseTemplate narrow>
+      <B.BaseText size={20} mb={2} block>
+        안녕하세요.{' '}
+        <B.BaseText type="primary" bold>
+          FocusOnMe
+        </B.BaseText>
+        에 오신 걸 환영합니다!
+      </B.BaseText>
+      <B.BaseForm form={form} onFinish={onSubmit} layout="vertical">
         <Form.Item name="name" label="이름">
           <Input />
         </Form.Item>
@@ -30,7 +26,11 @@ const RegisterPage = () => {
           <Input.Password />
         </Form.Item>
         <B.Box>
-          <Button>Create Account</Button>
+          <B.TextCenter>
+            <Button type="primary" block>
+              회원가입
+            </Button>
+          </B.TextCenter>
         </B.Box>
       </B.BaseForm>
     </B.BaseTemplate>
