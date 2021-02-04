@@ -1,5 +1,6 @@
 import { BrowserRouter, Switch } from 'react-router-dom'
 import { PublicRoute } from './components/routes'
+import HomePage from './pages/Home'
 import LoginPage from './pages/Login'
 import RegisterPage from './pages/Register'
 
@@ -9,6 +10,7 @@ function App() {
       <Switch>
         <PublicRoute path="/login" component={LoginPage} />
         <PublicRoute path="/register" component={RegisterPage} />
+        <PublicRoute path="/" component={HomePage} />
       </Switch>
     </BrowserRouter>
   )
