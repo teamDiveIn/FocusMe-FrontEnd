@@ -30,11 +30,18 @@ export const StyledHeaderBox = styled.div`
 `
 
 export const StyledContent = styled(Content)`
-  min-height: 100vh;
+  min-height: calc(100vh - ${(props) => props.theme.headerHeight}px);
   width: ${(props) => (props.narrow ? '440px' : '1000px')};
   max-width: 100%;
   padding: ${(props) => (props.nopadding ? '0px' : '20px')};
   margin: 0 auto;
+
+  ${(props) =>
+    props.verticalcenter &&
+    `
+      display:flex;
+      align-items: center;
+  `}
 `
 
 export const StyledDrawer = styled(Drawer)`

@@ -1,6 +1,6 @@
 import * as B from 'src/components'
 import React from 'react'
-import { Row, Col, Input, Button } from 'antd'
+import { Input, Button } from 'antd'
 import { useController } from './contoller'
 import theme from 'src/styles/theme'
 import * as S from './style'
@@ -9,8 +9,8 @@ const RegisterPage = () => {
   const { form, onSubmit } = useController()
 
   return (
-    <B.BaseTemplate backgroundColor={theme.primaryOverlay}>
-      <B.Box mtb={10} mlr={4}>
+    <B.BaseTemplate backgroundColor={theme.primaryOverlay} verticalCenter>
+      <B.Box mlr={4} width="100%">
         <B.BaseCard backgroundColor={theme.primaryDark} shadow>
           <B.Box p={2}>
             <B.BaseText type="white" size={24} block mb={4}>
@@ -18,8 +18,8 @@ const RegisterPage = () => {
             </B.BaseText>
 
             <B.BaseForm form={form} onFinish={onSubmit}>
-              <Row gutter={20}>
-                <Col sm={14}>
+              <B.Box display="flex">
+                <B.Box style={{ flex: '1 1 auto' }}>
                   <S.StyledFormItem name="name" label="이름">
                     <Input />
                   </S.StyledFormItem>
@@ -29,16 +29,18 @@ const RegisterPage = () => {
                   <S.StyledFormItem name="password" label="비밀번호">
                     <Input.Password />
                   </S.StyledFormItem>
-                </Col>
-                <Col sm={10}>
+                </B.Box>
+                <B.Box width={40}></B.Box>
+                <B.Box width={200}>
                   <B.TextCenter>
                     <img src="/images/avatar.png" alt="avater" width={140} />
                     <B.Box mtb={2}>
                       <Button ghost>프로필 업로드</Button>
                     </B.Box>
                   </B.TextCenter>
-                </Col>
-              </Row>
+                </B.Box>
+              </B.Box>
+
               <B.Box mt={4}>
                 <B.TextRight>
                   <Button type="primary" htmlType="submit">

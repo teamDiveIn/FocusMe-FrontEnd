@@ -10,6 +10,7 @@ export const BaseTemplate = ({
   noPadding = false,
   backgroundColor = '#FFFFFF',
   headerBackgroundColor,
+  verticalCenter,
 }) => {
   return (
     <Layout style={{ backgroundColor }}>
@@ -34,6 +35,7 @@ export const BaseTemplate = ({
       <S.StyledContent
         narrow={narrow ? 'true' : undefined}
         nopadding={noPadding ? 'true' : undefined}
+        verticalcenter={verticalCenter ? 'true' : undefined}
       >
         {children}
       </S.StyledContent>

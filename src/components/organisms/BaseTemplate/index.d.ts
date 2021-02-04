@@ -7,6 +7,7 @@ interface Props {
   backgroundColor?: string
   headerBackgroundColor?: string
   noHeaderShadow?: boolean
+  verticalCenter?: boolean
 }
 export declare const BaseTemplate: ({
   backgroundColor,
@@ -15,5 +16,6 @@ export declare const BaseTemplate: ({
   narrow,
   noHeaderShadow,
   noPadding,
+  verticalCenter,
 }: Props) => JSX.Element
 export {}
