@@ -2,6 +2,7 @@ import * as B from 'src/components'
 import React from 'react'
 import { Form, Input, Button } from 'antd'
 import { useController } from './contoller'
+import { Link } from 'react-router-dom'
 
 const RegisterPage = () => {
   const { form, onSubmit } = useController()
@@ -30,6 +31,13 @@ const RegisterPage = () => {
             <Button type="primary" block htmlType="submit">
               회원가입
             </Button>
+          </B.TextCenter>
+        </B.Box>
+        <B.Box mtb={2}>
+          <B.TextCenter>
+            <Link to="/login">
+              <B.BaseText underline>혹시 이미 계정이 있으신가요?</B.BaseText>
+            </Link>
           </B.TextCenter>
         </B.Box>
       </B.BaseForm>
