@@ -10,7 +10,8 @@ const RegisterPage = () => {
   return (
     <B.BaseTemplate narrow>
       <B.BaseText size={20} mb={2} block>
-        안녕하세요.{' '}
+        안녕하세요.
+        <br />
         <B.BaseText type="primary" bold>
           FocusOnMe
         </B.BaseText>
