@@ -5,7 +5,7 @@ export const StyledCardWrapper = styled.div`
 
   transition: transform 0.2s;
   &:hover {
-    transform: translateY(-5px) scale(1.05);
+    transform: translateY(-5px) scale(1.03);
   }
 `
 
