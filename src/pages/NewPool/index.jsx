@@ -1,6 +1,4 @@
 import * as B from 'src/components'
-import { Link, Route } from 'react-router-dom'
-import { Input, Button } from 'antd'
 import theme from 'src/styles/theme'
 import { Fade } from 'react-reveal'
 
