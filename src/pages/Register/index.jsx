@@ -5,6 +5,7 @@ import { useController } from './contoller'
 import theme from 'src/styles/theme'
 import * as S from './style'
 import { Fade } from 'react-reveal'
+import { useState } from 'react'
 
 const RegisterPage = () => {
   const { form, onSubmit } = useController()
