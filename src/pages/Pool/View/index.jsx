@@ -33,6 +33,10 @@ class PoolViewPage extends Component {
       publisher: undefined,
       subscribers: [],
       token: undefined,
+
+      video: true,
+      audio: true,
+      listenMute: true,
     }
   }
 
@@ -65,7 +69,6 @@ class PoolViewPage extends Component {
 
   joinSession = async () => {
     this.OV = new OpenVidu()
-
     this.setState(
       {
         session: this.OV.initSession(),
@@ -74,8 +77,8 @@ class PoolViewPage extends Component {
         var mySession = this.state.session
 
         mySession.on('streamCreated', (event) => {
-          var subscriber = mySession.subscribe(event.stream, undefined)
-          var subscribers = this.state.subscribers
+          const subscriber = mySession.subscribe(event.stream, undefined)
+          const subscribers = this.state.subscribers
           subscribers.push(subscriber)
 
           this.setState({
@@ -138,6 +141,34 @@ class PoolViewPage extends Component {
     })
   }
 
+  toggleVideo = () => {
+    if (this.state.publisher) {
+      this.state.publisher.publishVideo(!this.state.video)
+    }
+
+    this.setState({
+      video: !this.state.video,
+    })
+  }
+
+  toggleAudio = () => {
+    if (this.state.publisher) {
+      this.state.publisher.publishAudio(!this.state.audio)
+    }
+
+    this.setState({
+      audio: !this.state.audio,
+    })
+  }
+
+  toggleListenMute = () => {
+    this.state.subscribers.map((sub) => sub.subscribeToAudio(!this.state.listenMute))
+
+    this.setState({
+      listenMute: !this.state.listenMute,
+    })
+  }
+
   render() {
     return (
       <B.BaseTemplate>
@@ -167,9 +198,21 @@ class PoolViewPage extends Component {
             display="flex"
             justify="space-between"
           >
-            <S.ClickableImg src="/images/pool/video-on.png" alt="control" />
-            <S.ClickableImg src="/images/pool/mic-on.png" alt="control" />
-            <S.ClickableImg src="/images/pool/audio-on.png" alt="control" />
+            <S.ClickableImg
+              src={`/images/pool/video-${this.state.video ? 'on' : 'off'}.png`}
+              alt="control"
+              onClick={this.toggleVideo}
+            />
+            <S.ClickableImg
+              src={`/images/pool/mic-${this.state.audio ? 'on' : 'off'}.png`}
+              alt="control"
+              onClick={this.toggleAudio}
+            />
+            <S.ClickableImg
+              src={`/images/pool/audio-${this.state.listenMute ? 'on' : 'off'}.png`}
+              alt="control"
+              onClick={this.toggleListenMute}
+            />
           </B.Box>
         </S.StyledFooter>
 
