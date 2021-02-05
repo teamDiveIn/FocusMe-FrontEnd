@@ -1,7 +1,6 @@
 /* eslint no-undef: "off" */
 import { useCallback, useState } from 'react'
 import { message } from 'antd'
-import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 export const useController = () => {

@@ -44,6 +44,8 @@ class PoolViewPage extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('beforeunload', this.onbeforeunload)
+
+    this.leaveSession()
   }
 
   onbeforeunload = (event) => {
