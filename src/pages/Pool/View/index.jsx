@@ -15,11 +15,10 @@ const PoolViewPage = () => {
       <B.BaseText bold type="white" size={32} block mb={4}>
         영어 자격증 방
       </B.BaseText>
-      <div id="label-container"></div>
-      <canvas id="canvas"></canvas>
+
       <S.StyledCardContainer>
         <S.StyledCardWrapper>
-          <PoolCamCard />
+          <PoolCamCard me />
         </S.StyledCardWrapper>
         <S.StyledCardWrapper>
           <PoolCamCard />

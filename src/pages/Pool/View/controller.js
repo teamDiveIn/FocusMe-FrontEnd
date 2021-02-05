@@ -1,5 +1,7 @@
 /* eslint no-undef: "off" */
 
+import { message } from "antd"
+
 export const useController = () => {
   // Model URL
   const URL = 'https://teachablemachine.withgoogle.com/models/3p4QdqNUG/'
@@ -16,21 +18,28 @@ export const useController = () => {
     const sizeY = 270
     const flip = true // webcam 좌우 반전 flip 설정
     webcam = new tmPose.Webcam(sizeX, sizeY, flip) // webcam 생성
-    await webcam.setup() // request access to the webcam
-    await webcam.play()
-    window.requestAnimationFrame(loop)
 
-    // canvas에 웹캠 그리기
-    const canvas = document.getElementById('canvas')
-    canvas.width = sizeX
-    canvas.height = sizeY
-    ctx = canvas.getContext('2d')
+    try {
+      await webcam.setup() // request access to the webcam
+      await webcam.play()
+      window.requestAnimationFrame(loop)
 
-    // 예측결과 표시할 div
-    labelContainer = document.getElementById('label-container')
-    for (let i = 0; i < maxPredictions; i++) {
-      // and class labels
-      labelContainer.appendChild(document.createElement('div'))
+      // canvas에 웹캠 그리기
+      const canvas = document.getElementById('my-canvas')
+      if (!canvas) return
+
+      canvas.width = sizeX
+      canvas.height = sizeY
+      ctx = canvas.getContext('2d')
+
+      // 예측결과 표시할 div
+      labelContainer = document.getElementById('label-container')
+      for (let i = 0; i < maxPredictions; i++) {
+        // and class labels
+        labelContainer.appendChild(document.createElement('div'))
+      }
+    } catch (e) {
+      message.error('카메라를 활성화해주세요')
     }
   }
 
