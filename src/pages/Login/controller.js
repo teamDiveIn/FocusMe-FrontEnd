@@ -8,29 +8,36 @@ export const useController = () => {
   const [form] = useForm()
   const history = useHistory()
 
-  const [, register] = useAuthAxios('/user', {
+  const [, login] = useAuthAxios('/user/signin', {
     method: 'POST',
   })
 
   const onSubmit = useCallback(async () => {
     const updatedForm = form.getFieldsValue(true)
 
-    const { id, nickname, password } = updatedForm
+    const { id, password } = updatedForm
 
     try {
-      await register({ data: { user_id: id, nickname, password } })
-      history.replace('/register/complete')
+      const { data } = await login({ data: { user_id: id, password } })
+      const { accessToken, refreshToken } = data.data
+      console.log(accessToken, refreshToken)
+      message.success('로그인')
+      // history.replace('/register/complete')
     } catch (e) {
       const { msg, status } = e.response.data
 
       switch (status) {
-        case 409:
-          message.error('이미 존재하는 회원입니다.')
+        case 401:
+          message.error('비밀번호가 잘못되었습니다')
+          break
+        case 404:
+          message.error('존재하지 않는 아이디입니다.')
           break
         default:
           message.error(msg)
       }
     }
-  }, [form, register, history])
+  }, [form, login, history])
+
   return { form, onSubmit }
 }
