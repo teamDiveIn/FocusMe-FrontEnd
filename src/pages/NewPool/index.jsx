@@ -1,14 +1,12 @@
 import * as B from 'src/components'
-import { Input, Button, Radio } from 'antd'
+import { Input, Button } from 'antd'
 import { useController } from './contoller'
 import theme from 'src/styles/theme'
 import * as S from './style'
 import { Fade } from 'react-reveal'
-import { useState } from 'react'
 
 const NewPool = () => {
   const { form, onSubmit } = useController()
-  const [sliderValue] = useState(1)
 
   return (
     <B.BaseTemplate backgroundColor={theme.primaryOverlay} verticalCenter>

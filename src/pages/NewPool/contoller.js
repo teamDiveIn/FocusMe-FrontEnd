@@ -11,7 +11,7 @@ export const useController = () => {
 
     console.log(updatedForm)
 
-    // history.replace('/register/complete')
+    history.replace('/pool/view')
   }, [form, history])
   return { form, onSubmit }
 }
