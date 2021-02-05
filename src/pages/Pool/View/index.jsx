@@ -346,7 +346,7 @@ class PoolViewPage extends Component {
     await this.webcam.setup() // request access to the webcam
     await this.webcam.play()
 
-    this.state.captureTimeoutKey = setTimeout(this.captureImage, 5000)
+    this.state.captureTimeoutKey = setTimeout(this.captureImage, 3000)
   }
 
   mlLoop = async (timestamp) => {
@@ -445,7 +445,7 @@ class PoolViewPage extends Component {
       }
     }
 
-    this.state.captureTimeoutKey = setTimeout(this.captureImage, 5000)
+    this.state.captureTimeoutKey = setTimeout(this.captureImage, 3000)
   }
 }
 
