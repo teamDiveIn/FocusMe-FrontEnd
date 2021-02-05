@@ -69,7 +69,7 @@ export const StyledDrawerButton = styled.div`
 `
 
 export const StyledContent = styled.div`
-  background: linear-gradient(-45deg, #001e2e, #061338, #001e2e, #061338, #001e2e);
+  background: linear-gradient(-45deg, #00293d, #061338, #00293d, #061338, #00293d);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 
