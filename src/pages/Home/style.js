@@ -10,12 +10,18 @@ export const StyledCardWrapper = styled.div`
 `
 
 export const StyledImgCard = styled.img`
-  width: 350px;
+  width: 320px;
+  position: absolute;
+  bottom: 0;
 `
 
 export const StyledCardContent = styled.div`
-  left: 175px;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  position: absolute;
+  width: 320px;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: ${(props) => props.theme.primaryDark};
+  border-radius: 50px;
+  box-shadow: 0px 4px 20px rgba(0, 3, 32, 0.5);
 `
