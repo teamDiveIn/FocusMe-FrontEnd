@@ -48,7 +48,7 @@ export const StyledDrawer = styled(Drawer)`
       overflow: inherit;
       background-color: #063a64;
     }
-  }
+  } 
 `
 
 export const StyledDrawerButton = styled.div`

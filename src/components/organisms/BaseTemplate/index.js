@@ -14,6 +14,7 @@ export const BaseTemplate = ({
   backgroundColor = theme.primaryOverlay,
   headerBackgroundColor,
   verticalCenter,
+  isIntro,
 }) => {
   const { onLogout, logged, user } = useUserContext()
   return (
@@ -28,6 +29,7 @@ export const BaseTemplate = ({
 
           {logged ? (
             <B.TextRight>
+              <img src="/images/avatar.png" alt="avater" width={30} style={{marginRight:"10px"}}></img>
               <B.BaseText type="white" mr={2}>{user.nickname}</B.BaseText>
               <B.BaseText type="white" clickable onClick={() => onLogout()}>
                 로그아웃
@@ -43,7 +45,7 @@ export const BaseTemplate = ({
           )}
         </S.StyledHeader>
       </S.StyledHeaderWrapper>
-
+      {isIntro?null:(
       <S.StyledContent
         narrow={narrow ? 'true' : undefined}
         nopadding={noPadding ? 'true' : undefined}
@@ -51,6 +53,7 @@ export const BaseTemplate = ({
       >
         {children}
       </S.StyledContent>
+      )}
     </Layout>
   )
 }

@@ -1,21 +1,15 @@
 import * as B from 'src/components'
 import * as S from './style'
 import { ClockCircleOutlined } from '@ant-design/icons'
+import { OpenViduVideo } from '../OvVideo'
 
-export const PoolCamCard = ({ me }) => {
+export const PoolCamCard = ({ streamManager }) => {
   return (
     <B.Box>
       <S.StyledCard>
-        {me ? (
-          <S.StyledVideoContent>
-            <div id="label-container" style={{ display: 'none' }}></div>
-            <canvas id="my-canvas" style={{ borderRadius: 32, width: 280, height: 270 }}></canvas>
-          </S.StyledVideoContent>
-        ) : (
-          <S.StyledVideoContent>
-            <canvas style={{ borderRadius: 32, width: 280, height: 270 }}></canvas>
-          </S.StyledVideoContent>
-        )}
+        <S.StyledVideoContent>
+          {streamManager !== undefined ? <OpenViduVideo streamManager={streamManager} /> : null}
+        </S.StyledVideoContent>
 
         <S.StyledFooter>
           <S.StyledNicknameWrapper>유저 닉네임 1</S.StyledNicknameWrapper>

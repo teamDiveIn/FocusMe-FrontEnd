@@ -1,9 +1,11 @@
 /* eslint no-undef: "off" */
 import { useCallback, useState } from 'react'
 import { message } from 'antd'
+import { useParams } from 'react-router-dom'
 
 export const useController = () => {
-  const [visible, setVisible] = useState(true)
+  const [visible, setVisible] = useState(false)
+  const { sessionName } = useParams()
 
   const onToggleVisible = useCallback(() => {
     setVisible(!visible)
@@ -95,5 +97,5 @@ export const useController = () => {
     }
   }
 
-  return { init, onToggleVisible, visible, onClose }
+  return { init, onToggleVisible, visible, onClose, sessionName }
 }
