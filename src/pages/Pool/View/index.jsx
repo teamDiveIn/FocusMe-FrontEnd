@@ -49,6 +49,7 @@ class PoolViewPage extends Component {
 
       myThumbnail: undefined,
       thumbnails: {},
+      exists: {},
     }
 
     this.canvasRef = React.createRef()
@@ -64,6 +65,9 @@ class PoolViewPage extends Component {
     this.boy2Ref = React.createRef()
     this.boy3Ref = React.createRef()
     this.boy4Ref = React.createRef()
+
+    // 화상 화면 내의 존재 여부
+    this.exist = true
   }
 
   async componentDidMount() {
@@ -130,14 +134,17 @@ class PoolViewPage extends Component {
         mySession.on('signal', (event) => {
           const data = JSON.parse(event.data)
 
-          const { userId, url } = data
+          const { userId, url, exist } = data
 
           const thumbnails = this.state.thumbnails
-
           thumbnails[userId.toString()] = url
+
+          const exists = this.state.exists
+          exists[userId.toString()] = exist
 
           this.setState({
             thumbnails,
+            exists,
           })
         })
 
@@ -227,106 +234,122 @@ class PoolViewPage extends Component {
 
   render() {
     return (
-      <B.BaseTemplate>
-        <div style={{ display: 'none' }}>
-          <canvas ref={this.canvasRef} width="280" height="270"></canvas>
-        </div>
+      <S.StyledContent>
+        <S.StyledBackgroundImageWrapper>
+          <B.BaseTemplate backgroundColor="transparent">
+            <div style={{ display: 'none' }}>
+            <canvas ref={this.canvasRef} width="280" height="270"></canvas>
+            </div>
 
-        <div style={{ display: 'none' }}>
-          <img ref={this.girl0Ref} src="/images/memoji/0.png" alt="memoji" />
-          <img ref={this.girl1Ref} src="/images/memoji/1.png" alt="memoji" />
-          <img ref={this.girl2Ref} src="/images/memoji/2.png" alt="memoji" />
-          <img ref={this.girl3Ref} src="/images/memoji/3.png" alt="memoji" />
-          <img ref={this.girl4Ref} src="/images/memoji/4.png" alt="memoji" />
-        </div>
+            <div style={{ display: 'none' }}>
+              <img ref={this.girl0Ref} src="/images/memoji/0.png" alt="memoji" />
+              <img ref={this.girl1Ref} src="/images/memoji/1.png" alt="memoji" />
+              <img ref={this.girl2Ref} src="/images/memoji/2.png" alt="memoji" />
+              <img ref={this.girl3Ref} src="/images/memoji/3.png" alt="memoji" />
+              <img ref={this.girl4Ref} src="/images/memoji/4.png" alt="memoji" />
+            </div>
 
-        <B.BaseText bold type="white" size={32} block mb={4}>
-          영어 자격증 풀
-        </B.BaseText>
-
-        <S.StyledCardContainer>
-          <S.StyledCardWrapper>
-            <PoolCamCard
-              streamManager={this.state.publisher}
-              imageUrl={
-                this.state.publisher
-                  ? this.state.publisher.stream.videoActive
-                    ? undefined
-                    : this.state.myThumbnail
-                  : undefined
-              }
-            />
-          </S.StyledCardWrapper>
-
-          {fill(Array(5), 0).map((_, index) => (
-            <S.StyledCardWrapper key={index}>
-              <PoolCamCard
-                streamManager={
-                  this.state.subscribers.length > index ? this.state.subscribers[index] : undefined
-                }
-                imageUrl={
-                  this.state.subscribers.length > index
-                    ? this.state.thumbnails[
-                        JSON.parse(
-                          this.state.subscribers[index].stream.connection.data.split('%/%')[1],
-                        ).serverData.userId.toString()
-                      ]
-                    : undefined
-                }
-              />
-            </S.StyledCardWrapper>
-          ))}
-        </S.StyledCardContainer>
-
-        <S.StyledFooter>
-          <B.Box
-            style={{ width: 300, marginLeft: 'auto', marginRight: 'auto' }}
-            display="flex"
-            justify="space-between"
-          >
-            <S.ClickableImg
-              src={`/images/pool/video-${this.state.video ? 'on' : 'off'}.png`}
-              alt="control"
-              onClick={this.toggleVideo}
-            />
-            <S.ClickableImg
-              src={`/images/pool/mic-${this.state.audio ? 'on' : 'off'}.png`}
-              alt="control"
-              onClick={this.toggleAudio}
-            />
-            <S.ClickableImg
-              src={`/images/pool/audio-${this.state.listenMute ? 'on' : 'off'}.png`}
-              alt="control"
-              onClick={this.toggleListenMute}
-            />
-          </B.Box>
-        </S.StyledFooter>
-
-        <S.StyledDrawer
-          width="400"
-          placement="right"
-          closable={false}
-          onClose={this.props.controller.onClose}
-          visible={this.props.controller.visible}
-        >
-          <S.StyledDrawerButton onClick={() => this.props.controller.onToggleVisible()}>
-            <B.BaseText size={24} style={{ lineHeight: 100 }}>
-              {this.props.controller.visible ? <RightOutlined /> : <LeftOutlined />}
+            <B.BaseText bold type="white" size={32} block mb={4}>
+              영어 자격증 풀
             </B.BaseText>
-          </S.StyledDrawerButton>
-          <B.Box mtb={4}>
-            <B.TextCenter>
-              <img src="/images/avatar.png" alt="avater" width={140} />
-              <B.BaseText block mtb={2}>
-                <img src="/images/achieve/2.png" alt="avater" width={32} />{' '}
-                <B.BaseText pl={1} size="huge" bold>
-                  {this.props.user.nickname}
+
+            <S.StyledCardContainer>
+              <S.StyledCardWrapper>
+                <PoolCamCard
+                  streamManager={this.state.publisher}
+                  imageUrl={
+                    this.state.publisher
+                      ? this.state.publisher.stream.videoActive
+                        ? undefined
+                        : this.state.myThumbnail
+                      : undefined
+                  }
+                  exist={this.exist}
+                />
+              </S.StyledCardWrapper>
+
+              {fill(Array(5), 0).map((_, index) => (
+                <S.StyledCardWrapper key={index}>
+                  <PoolCamCard
+                    streamManager={
+                      this.state.subscribers.length > index
+                        ? this.state.subscribers[index]
+                        : undefined
+                    }
+                    imageUrl={
+                      this.state.subscribers.length > index
+                        ? this.state.thumbnails[
+                            JSON.parse(
+                              this.state.subscribers[index].stream.connection.data.split('%/%')[1],
+                            ).serverData.userId.toString()
+                          ]
+                        : undefined
+                    }
+                    exist={
+                      this.state.subscribers.length > index
+                        ? this.state.exists[
+                            JSON.parse(
+                              this.state.subscribers[index].stream.connection.data.split('%/%')[1],
+                            ).serverData.userId.toString()
+                          ]
+                        : undefined
+                    }
+                  />
+                </S.StyledCardWrapper>
+              ))}
+            </S.StyledCardContainer>
+
+            <S.StyledFooter>
+              <B.Box
+                style={{ width: 300, marginLeft: 'auto', marginRight: 'auto' }}
+                display="flex"
+                justify="space-between"
+              >
+                <S.ClickableImg
+                  src={`/images/pool/video-${this.state.video ? 'on' : 'off'}.png`}
+                  alt="control"
+                  onClick={this.toggleVideo}
+                />
+                <S.ClickableImg
+                  src={`/images/pool/mic-${this.state.audio ? 'on' : 'off'}.png`}
+                  alt="control"
+                  onClick={this.toggleAudio}
+                />
+                <S.ClickableImg
+                  src={`/images/pool/audio-${this.state.listenMute ? 'on' : 'off'}.png`}
+                  alt="control"
+                  onClick={this.toggleListenMute}
+                />
+              </B.Box>
+            </S.StyledFooter>
+
+            <S.StyledDrawer
+              width="400"
+              placement="right"
+              closable={false}
+              onClose={this.props.controller.onClose}
+              visible={this.props.controller.visible}
+            >
+              <S.StyledDrawerButton onClick={() => this.props.controller.onToggleVisible()}>
+                <B.BaseText size={24} style={{ lineHeight: 100 }}>
+                  {this.props.controller.visible ? <RightOutlined /> : <LeftOutlined />}
                 </B.BaseText>
-              </B.BaseText>
-            </B.TextCenter>
-          </B.Box>
-        </S.StyledDrawer>
-      </B.BaseTemplate>
+              </S.StyledDrawerButton>
+              <B.Box mtb={4}>
+                <B.TextCenter>
+                  <img src="/images/avatar.png" alt="avater" width={140} />
+                  <B.BaseText block mtb={2}>
+                    <img src="/images/achieve/2.png" alt="avater" width={32} />{' '}
+                    <B.BaseText pl={1} size="huge" bold>
+                      {this.props.user.nickname}
+                    </B.BaseText>
+                  </B.BaseText>
+                </B.TextCenter>
+              </B.Box>
+            </S.StyledDrawer>
+          </B.BaseTemplate>
+        </S.StyledBackgroundImageWrapper>
+      </S.StyledContent>
     )
   }
 
@@ -346,7 +369,7 @@ class PoolViewPage extends Component {
     await this.webcam.setup() // request access to the webcam
     await this.webcam.play()
 
-    this.state.captureTimeoutKey = setTimeout(this.captureImage, 5000)
+    this.state.captureTimeoutKey = setTimeout(this.captureImage, 3000)
   }
 
   mlLoop = async (timestamp) => {
@@ -376,12 +399,16 @@ class PoolViewPage extends Component {
       // 얼굴의 중심 좌표
       center = pose.keypoints[0].position
       // 여기서 집중 안한 경우 처리하면 됨
+      this.exist = true
+    } else {
+      this.exist = false
     }
 
     if (canvas) {
       // 기본 화면 그리기
       ctx.fillStyle = 'black'
       ctx.fillRect(0, 0, 280, 270)
+      // ctx.drawImage(this.webcam.canvas, 0, 0, 280, 270)
 
       // 이모지 그리기
       let argmax = 0
@@ -417,35 +444,49 @@ class PoolViewPage extends Component {
     const canvas = this.canvasRef.current
 
     if (canvas) {
-      try {
-        const imageDataUrl = canvas.toDataURL('image/png')
+      if (this.exist) {
+        try {
+          const imageDataUrl = canvas.toDataURL('image/png')
 
-        const { data } = await nodeApiAxios.get('/common?ext=png')
+          const { data } = await nodeApiAxios.get('/common?ext=png')
 
-        const { uploadUrl, url } = data
+          const { uploadUrl, url } = data
 
-        var blobBin = atob(imageDataUrl.split(',')[1]) // base64 데이터 디코딩
-        var array = []
-        for (var i = 0; i < blobBin.length; i++) {
-          array.push(blobBin.charCodeAt(i))
+          var blobBin = atob(imageDataUrl.split(',')[1]) // base64 데이터 디코딩
+          var array = []
+          for (var i = 0; i < blobBin.length; i++) {
+            array.push(blobBin.charCodeAt(i))
+          }
+          var file = new Blob([new Uint8Array(array)], { type: 'image/png' })
+
+          await axios.put(uploadUrl, file)
+
+          this.setState({ myThumbnail: url })
+
+          await this.state.session.signal({
+            data: JSON.stringify({ userId: this.props.user.id, url, exist: true }),
+            to: [],
+            type: 'thumbnail',
+          })
+        } catch (e) {
+          console.error(e)
         }
-        var file = new Blob([new Uint8Array(array)], { type: 'image/png' })
-
-        await axios.put(uploadUrl, file)
-
+      } else {
+        const url = `https://fsb.zobj.net/crop.php?r=wDSkG5kdKJnRj0U65sdleLKa8iIrnN4OjgcOuO0DpV-B4LwLpQpYp_zn3b4eD3jJjOITsSM6vjG1rKcik0LISi-PeQ2Hg7Kh1HAraWH0KK3_so2DIrDDasYhCKw1QdNTL1J7S5HUCxKsq6xj`
         this.setState({ myThumbnail: url })
-
         await this.state.session.signal({
-          data: JSON.stringify({ userId: this.props.user.id, url }),
+          data: JSON.stringify({
+            userId: this.props.user.id,
+            url,
+            exist: false,
+          }),
           to: [],
           type: 'thumbnail',
         })
-      } catch (e) {
-        console.error(e)
       }
     }
 
-    this.state.captureTimeoutKey = setTimeout(this.captureImage, 5000)
+    this.state.captureTimeoutKey = setTimeout(this.captureImage, 3000)
   }
 }
 

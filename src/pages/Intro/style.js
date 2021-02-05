@@ -1,6 +1,5 @@
 import styled from 'styled-components'
-import { Layout, Drawer } from 'antd'
-import { lighten } from 'polished'
+import { Layout } from 'antd'
 const { Header, Content } = Layout
 
 export const StyledHeaderWrapper = styled.div`
@@ -12,7 +11,8 @@ export const StyledHeader = styled(Header)`
   left: 0;
   right: 0%;
   top: 0;
-  background-color: ${(props) => (props.backgroundcolor ? props.backgroundcolor : '#032642')}; // #063A64 , #032642
+  background-color: ${(props) =>
+    props.backgroundcolor ? props.backgroundcolor : '#032642'}; // #063A64 , #032642
   padding: 0 20px;
   z-index: 1;
 
@@ -44,20 +44,4 @@ export const StyledContent = styled(Content)`
   `}
 `
 
-export const StyledDrawer = styled(Drawer)`
-  & .ant-drawer-body {
-    padding: 0;
-  }
-`
-
-export const StyledDrawerItem = styled.div`
-  cursor: pointer;
-  padding: 18px 24px;
-  transition: background-color 0.5s;
-  border-bottom: 1px solid ${(props) => props.theme.disabled};
-  color: ${(props) => props.theme.subText};
-
-  &:hover {
-    background-color: ${(props) => lighten(0.1, props.theme.primaryLight)};
-  }
-`
+export const StyledSection = styled.section``

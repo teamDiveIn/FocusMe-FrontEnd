@@ -7,7 +7,7 @@ export const StyledCard = styled.div`
 
   position: relative;
 
-  box-shadow: 0px 25px 20px -5px rgba(0, 0, 0, 0.24);
+  box-shadow: 0px 25px 20px -5px rgba(0, 0, 0, 0.5);
 `
 
 export const StyledVideoContent = styled.div`
@@ -54,6 +54,9 @@ export const StyledThumbnail = styled.img`
   position: absolute;
   top: 0px;
   left: 0px;
+
+  width: 280px;
+  height: 270px;
 
   border-top-left-radius: 32px;
   border-top-right-radius: 32px;
