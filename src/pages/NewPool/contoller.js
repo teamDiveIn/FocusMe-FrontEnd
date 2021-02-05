@@ -11,7 +11,7 @@ export const useController = () => {
 
     console.log(updatedForm)
 
-    history.replace('/register/complete')
+    // history.replace('/register/complete')
   }, [form, history])
   return { form, onSubmit }
 }

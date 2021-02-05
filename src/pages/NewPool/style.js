@@ -17,20 +17,16 @@ export const StyledRadioButton = styled(Radio.Button)`
   background: transparent;
 
   && {
-    width: 315px;
-    height: 58px;
+    flex: 1 1 auto;
+    height: 50px;
     border-radius: 8px;
     text-align: center;
-    padding-top: 8px;
-  }
-
-  && {
+    line-height: 50px;
     border-left-width: 1px;
   }
 
   &&::before {
     display: none;
-    
   }
 
   &.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
@@ -39,25 +35,24 @@ export const StyledRadioButton = styled(Radio.Button)`
 `
 
 export const StyledSlider = styled(Slider)`
-
-  $.ant-slider-rail{
-    height: 20px;
-    color: red;
+  & {
+    top: -14px;
+  }
+  & .ant-slider-rail {
+    height: 32px;
   }
 
-  &.ant-slider-track{
-    height: 30px;
+  & .ant-slider-track {
+    height: 32px;
   }
 
+  & .ant-slider-handle {
+    width: 42px;
+    height: 42px;
+  }
 `
 
 export const StyledRadioGroup = styled(Radio.Group)`
   display: flex;
   justify-content: space-between;
 `
-
-export const StyledSelectGroup = styled(Radio.Group)`
-  display: flex;
-  justify-content: space-between;
-`
-
