@@ -1,6 +1,8 @@
 /* eslint no-undef: "off" */
 import { useCallback, useState } from 'react'
 import { message } from 'antd'
+import { useEffect } from 'react'
+import { nodeApiAxios } from 'src/lib/axios'
 
 export const useController = () => {
   const [visible, setVisible] = useState(true)
@@ -11,6 +13,19 @@ export const useController = () => {
 
   const onClose = useCallback(() => {
     setVisible(false)
+  }, [])
+
+  // 테스트 웹 연결
+  useEffect(() => {
+    async function run() {
+      // const { data } = await nodeApiAxios.post('/webrtc/token', {
+      //   session: 'test',
+      // })
+
+      // console.log(data)
+    }
+
+    run()
   }, [])
 
   // Model URL
