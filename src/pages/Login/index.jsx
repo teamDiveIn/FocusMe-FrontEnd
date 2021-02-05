@@ -32,6 +32,7 @@ const LoginPage = () => {
                               </B.BaseText>
                             }
                             placeholder="아이디"
+                            style={{ borderRadius:"29px"}}
                           />
                         </Form.Item>
 
@@ -43,11 +44,12 @@ const LoginPage = () => {
                               </B.BaseText>
                             }
                             placeholder="비밀번호"
+                            style={{ borderRadius:"29px"}}
                           />
                         </Form.Item>
 
                         <B.Box mtb={4}>
-                          <Button type="primary" htmlType="submit" block>
+                          <Button type="primary" htmlType="submit" block style={{ borderRadius:"29px"}}>
                             로그인
                           </Button>
                         </B.Box>
