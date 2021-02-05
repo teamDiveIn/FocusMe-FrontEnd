@@ -1,9 +1,11 @@
 import React from 'react'
 import { Layout } from 'antd'
+import * as B from 'src/components'
 import * as S from './style'
 import { Link } from 'react-router-dom'
 import { BaseLogo } from 'src/components/atoms/BaseLogo'
 import theme from 'src/styles/theme'
+import { useUserContext } from 'src/contexts/UserContext'
 
 export const BaseTemplate = ({
   children,
@@ -13,6 +15,7 @@ export const BaseTemplate = ({
   headerBackgroundColor,
   verticalCenter,
 }) => {
+  const { onLogout, logged, user } = useUserContext()
   return (
     <Layout style={{ backgroundColor }}>
       <S.StyledHeaderWrapper>
@@ -23,13 +26,21 @@ export const BaseTemplate = ({
             </Link>
           </div>
 
-          {/* <S.StyledHeaderBox>
+          {logged ? (
             <B.TextRight>
-              <B.BaseText type="primary" clickable onClick={() => onLogout()}>
+              <B.BaseText type="white" mr={2}>{user.nickname}</B.BaseText>
+              <B.BaseText type="white" clickable onClick={() => onLogout()}>
                 로그아웃
               </B.BaseText>
             </B.TextRight>
-          </S.StyledHeaderBox> */}
+          ) : (
+            <B.TextRight>
+              <B.BaseText></B.BaseText>
+              <Link to="/login">
+                <B.BaseText type="white">로그인</B.BaseText>
+              </Link>
+            </B.TextRight>
+          )}
         </S.StyledHeader>
       </S.StyledHeaderWrapper>
 
@@ -40,46 +51,6 @@ export const BaseTemplate = ({
       >
         {children}
       </S.StyledContent>
-      {/* <S.StyledDrawer
-        visible={visible}
-        onClose={() => setVisible(false)}
-        closable={false}
-        placement="left"
-        title={
-          <Link to="/">
-            <B.BaseLogo onClick={() => setVisible(false)} />
-          </Link>
-        }
-      >
-        <Link to="/">
-          <S.StyledDrawerItem onClick={() => setVisible(false)}>
-            <Row justify="space-between" align="middle">
-              <span>홈</span>
-            </Row>
-          </S.StyledDrawerItem>
-        </Link>
-
-        {logged ? (
-          <S.StyledDrawerItem
-            onClick={() => {
-              onLogout()
-              setVisible(false)
-            }}
-          >
-            <Row justify="space-between" align="middle">
-              <span>로그아웃</span>
-            </Row>
-          </S.StyledDrawerItem>
-        ) : (
-          <Link to="/login">
-            <S.StyledDrawerItem>
-              <Row justify="space-between" align="middle">
-                <span>로그인</span>
-              </Row>
-            </S.StyledDrawerItem>
-          </Link>
-        )}
-      </S.StyledDrawer> */}
     </Layout>
   )
 }

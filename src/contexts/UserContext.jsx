@@ -33,6 +33,7 @@ export const UserProvider = ({ children }) => {
     setLogged(false)
 
     storage.removeItem('accessToken')
+    storage.removeItem('refreshToken')
 
     history.replace('/')
   }, [setUser, setLogged, history])
