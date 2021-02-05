@@ -1,3 +1,4 @@
+import { Drawer } from 'antd'
 import styled from 'styled-components'
 
 export const StyledCardContainer = styled.div`
@@ -38,4 +39,31 @@ export const ClickableImg = styled.img`
   &:hover {
     transform: translateY(-5px) scale(1.03);
   }
+`
+
+export const StyledDrawer = styled(Drawer)`
+  && {
+    color: white;
+    & .ant-drawer-content {
+      overflow: inherit;
+      background-color: #063a64;
+    }
+  }
+`
+
+export const StyledDrawerButton = styled.div`
+  cursor: pointer;
+  position: absolute;
+  right: 400px;
+  top: calc(50% - 50px);
+  background-color: #063a64;
+  width: 50px;
+  height: 100px;
+
+  border-top-left-radius: 25px;
+  border-bottom-left-radius: 25px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `
