@@ -15,15 +15,15 @@ const IntroPage = () => {
         <div>
             <B.BaseTemplate backgroundColor={theme.primaryOverlay} isIntro={true}>
             </B.BaseTemplate>
-            <section id="intro" className="clearfix" style={{marginLeft:"10%", marginRight:"10%"}}>
-                <div className="container d-flex h-100">
+            <section id="intro" className="clearfix" >
+                <div className="container d-flex h-100" style={{marginLeft:"10%", marginRight:"10%"}}>
                     <div className="row justify-content-center align-self-center">
                         <div className="col-md-6 intro-info order-md-first order-last">
                             <h2>AI와 함께 목표를 이루는 그날까지 <br />원격으로 스터디하자! </h2>
                             <h3>혼자서 집중하기 어려울 땐? 다이브인! </h3>
                             <div>
                                 <Link to="/login">
-                                <Button type="primary" htmlType="submit" style={{ fontSize: "16px", width: "250px", height: "60px", borderRadius: "30px", marginLeft:"15%"}}>
+                                <Button type="primary" htmlType="submit" style={{fontSize: "16px", width: "250px", height: "60px", borderRadius: "30px", marginLeft:"15%"}}>
                                     지금 집중 시작하기
                                 </Button>
                                 </Link>
@@ -32,11 +32,9 @@ const IntroPage = () => {
                                 <img src="/images/introPage/person.png" alt="" className="img-fluid" />
                             </div>
                         </div>
-                        
-                        <img src="/images/introPage/pattern2.png" alt="" className="img-fluid" />
                     </div>
                 </div>
-                
+                <img src="/images/introPage/pattern2.png" alt="" className="img-fluid" style={{width:"100%"}} />
             </section>
             <main id="main" style={{marginLeft:"20%", marginRight:"20%"}}>
                 <section id="about">
