@@ -8,6 +8,7 @@ import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import { fill } from 'lodash'
 import { OpenVidu } from 'openvidu-browser'
 import { nodeApiAxios } from 'src/lib/axios'
+import axios from 'axios'
 
 const withHooksHOC = (Component) => {
   return (props) => {
@@ -44,6 +45,7 @@ class PoolViewPage extends Component {
       maxPredictions: undefined,
       videoEl: undefined,
       loopTimeoutKey: undefined, // 루프 도는 타임아웃 콜백 키
+      captureTimeoutKey: undefined,
     }
 
     this.canvasRef = React.createRef()
@@ -77,12 +79,15 @@ class PoolViewPage extends Component {
   componentWillUnmount() {
     window.removeEventListener('beforeunload', this.onbeforeunload)
     clearTimeout(this.loopTimeoutKey)
+    clearTimeout(this.captureTimeoutKey)
 
     this.leaveSession()
+    this.webcam.stop()
   }
 
   onbeforeunload = (event) => {
     this.leaveSession()
+    this.webcam.stop()
   }
 
   deleteSubscriber = (streamManager) => {
@@ -206,7 +211,9 @@ class PoolViewPage extends Component {
   render() {
     return (
       <B.BaseTemplate>
-        <canvas ref={this.canvasRef} width="280" height="270"></canvas>
+        <div style={{ display: 'none' }}>
+          <canvas ref={this.canvasRef} width="280" height="270"></canvas>
+        </div>
 
         <div style={{ display: 'none' }}>
           <img ref={this.girl0Ref} src="/images/memoji/0.png" alt="memoji" />
@@ -303,6 +310,8 @@ class PoolViewPage extends Component {
     this.webcam = new tmPose.Webcam(280, 270, false) // webcam 생성
     await this.webcam.setup() // request access to the webcam
     await this.webcam.play()
+
+    this.captureTimeoutKey = setTimeout(this.captureImage, 5000)
   }
 
   mlLoop = async (timestamp) => {
@@ -338,7 +347,6 @@ class PoolViewPage extends Component {
       // 기본 화면 그리기
       ctx.fillStyle = 'black'
       ctx.fillRect(0, 0, 280, 270)
-      
 
       // 이모지 그리기
       let argmax = 0
@@ -360,14 +368,45 @@ class PoolViewPage extends Component {
       }
 
       // 포즈 그리기
-      if (pose) {
-        const minPartConfidence = 0.5
-        // eslint-disable-next-line
-        tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx)
-        // eslint-disable-next-line
-        tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx)
+      // if (pose) {
+      //   const minPartConfidence = 0.5
+      //   // eslint-disable-next-line
+      //   tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx)
+      //   // eslint-disable-next-line
+      //   tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx)
+      // }
+    }
+  }
+
+  captureImage = async () => {
+    const canvas = this.canvasRef.current
+
+    if (canvas) {
+      try {
+        const imageDataUrl = canvas.toDataURL('image/png')
+
+        const { data } = await nodeApiAxios.get('/common?ext=png')
+
+        const { uploadUrl, url } = data
+
+        var blobBin = atob(imageDataUrl.split(',')[1]) // base64 데이터 디코딩
+        var array = []
+        for (var i = 0; i < blobBin.length; i++) {
+          array.push(blobBin.charCodeAt(i))
+        }
+        var file = new Blob([new Uint8Array(array)], { type: 'image/png' })
+
+        console.log(file)
+
+        await axios.put(uploadUrl, file)
+
+        // console.log(data)
+      } catch (e) {
+        console.error(e)
       }
     }
+
+    this.captureTimeoutKey = setTimeout(this.captureImage, 5000)
   }
 }
 
