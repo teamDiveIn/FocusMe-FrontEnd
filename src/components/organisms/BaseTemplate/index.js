@@ -28,6 +28,7 @@ export const BaseTemplate = ({
 
           {logged ? (
             <B.TextRight>
+              <img src="/images/avatar.png" alt="avater" width={30} style={{marginRight:"10px"}}></img>
               <B.BaseText type="white" mr={2}>{user.nickname}</B.BaseText>
               <B.BaseText type="white" clickable onClick={() => onLogout()}>
                 로그아웃

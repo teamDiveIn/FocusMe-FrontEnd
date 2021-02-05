@@ -9,6 +9,7 @@ import NewPool from './pages/NewPool'
 import RegisterCompletePage from './pages/Register/Complete'
 import PoolViewPage from './pages/Pool/View'
 import PoolListPage from './pages/Pool/List'
+import IntroPage from './pages/Intro'
 import { useUserContext } from './contexts/UserContext'
 
 function App() {
@@ -23,6 +24,9 @@ function App() {
   ) : (
     <BrowserRouter>
       <Switch>
+
+      <PublicRoute path="/intro" component={IntroPage} /> {/* intro page */}
+
         <PublicRoute path="/login" component={LoginPage} />
         <PublicRoute path="/register/complete" component={RegisterCompletePage} />
         <PublicRoute path="/register" component={RegisterPage} />

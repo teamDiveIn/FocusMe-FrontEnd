@@ -5,6 +5,7 @@ export const StyledFormItem = styled(Form.Item)`
   label {
     width: 100px;
     color: ${(props) => props.theme.disabled};
+    font-size: 16px;
 
     &::after {
       content: '';
@@ -16,9 +17,11 @@ export const StyledRadioButton = styled(Radio.Button)`
   background: transparent;
 
   && {
-    width: 212px;
+    width: 315px;
+    height: 58px;
     border-radius: 8px;
     text-align: center;
+    padding-top: 8px;
   }
 
   && {
@@ -27,6 +30,7 @@ export const StyledRadioButton = styled(Radio.Button)`
 
   &&::before {
     display: none;
+    
   }
 
   &.ant-radio-button-wrapper-checked:not(.ant-radio-button-wrapper-disabled) {
@@ -42,11 +46,10 @@ export const StyledSlider = styled(Slider)`
   }
 
   &.ant-slider-track{
-    height: 20px;
+    height: 30px;
   }
+
 `
-
-
 
 export const StyledRadioGroup = styled(Radio.Group)`
   display: flex;

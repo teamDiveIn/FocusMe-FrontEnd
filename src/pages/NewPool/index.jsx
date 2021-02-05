@@ -8,14 +8,14 @@ import { useState } from 'react'
 
 const NewPool = () => {
   const { form, onSubmit } = useController()
-  const [sliderValue] = useState([])
+  const [sliderValue] = useState(1)
 
   return (
     <B.BaseTemplate backgroundColor={theme.primaryOverlay} verticalCenter>
       <B.Box mlr={4} width={990}>
         <Fade bottom distance="20px" delay={50}>
-          <B.BaseCard backgroundColor={theme.primaryDark} shadow style={{borderRadius:"25px"}}>
-            <B.Box p={2}>
+          <B.BaseCard backgroundColor={theme.primaryDark} shadow radius="10px">
+            <B.Box p={2} >
               <div style={{ marginBottom: '20px' }}>
                 <B.BaseText type="white" size={36} mb={4} style={{ marginRight: '20px' }}>
                   POOL 만들기
@@ -35,10 +35,10 @@ const NewPool = () => {
                       </S.StyledRadioGroup>
                     </S.StyledFormItem>
                     <S.StyledFormItem name="capacity" label="최대 인원">
-                      <Slider
-                        min={1}
+                      <S.StyledSlider
+                        min={0}
                         max={6}
-                        value={typeof sliderValue === 'number' ? sliderValue : 0}
+                        value={typeof sliderValue === 'number' ? sliderValue : 1}
                       />
                     </S.StyledFormItem>
                     <S.StyledFormItem name="keyword" label="키워드">
