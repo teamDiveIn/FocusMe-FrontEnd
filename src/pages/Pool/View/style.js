@@ -48,7 +48,7 @@ export const StyledDrawer = styled(Drawer)`
       overflow: inherit;
       background-color: #063a64;
     }
-  } 
+  }
 `
 
 export const StyledDrawerButton = styled.div`
@@ -66,4 +66,37 @@ export const StyledDrawerButton = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+`
+
+export const StyledContent = styled.div`
+  background: linear-gradient(-45deg, #001e2e, #061338, #001e2e, #061338, #001e2e);
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+`
+
+export const StyledBackgroundImageWrapper = styled.div`
+  &:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background: url(/images/login/back.png);
+    background-size: cover;
+    background-position: center;
+    opacity: 0.05;
+  }
 `

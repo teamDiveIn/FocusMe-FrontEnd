@@ -234,116 +234,122 @@ class PoolViewPage extends Component {
 
   render() {
     return (
-      <B.BaseTemplate>
-        <div style={{ display: 'none' }}>
-          <canvas ref={this.canvasRef} width="280" height="270"></canvas>
-        </div>
+      <S.StyledContent>
+        <S.StyledBackgroundImageWrapper>
+          <B.BaseTemplate backgroundColor="transparent">
+            <div style={{ display: 'none' }}>
+            <canvas ref={this.canvasRef} width="280" height="270"></canvas>
+            </div>
 
-        <div style={{ display: 'none' }}>
-          <img ref={this.girl0Ref} src="/images/memoji/0.png" alt="memoji" />
-          <img ref={this.girl1Ref} src="/images/memoji/1.png" alt="memoji" />
-          <img ref={this.girl2Ref} src="/images/memoji/2.png" alt="memoji" />
-          <img ref={this.girl3Ref} src="/images/memoji/3.png" alt="memoji" />
-          <img ref={this.girl4Ref} src="/images/memoji/4.png" alt="memoji" />
-        </div>
+            <div style={{ display: 'none' }}>
+              <img ref={this.girl0Ref} src="/images/memoji/0.png" alt="memoji" />
+              <img ref={this.girl1Ref} src="/images/memoji/1.png" alt="memoji" />
+              <img ref={this.girl2Ref} src="/images/memoji/2.png" alt="memoji" />
+              <img ref={this.girl3Ref} src="/images/memoji/3.png" alt="memoji" />
+              <img ref={this.girl4Ref} src="/images/memoji/4.png" alt="memoji" />
+            </div>
 
-        <B.BaseText bold type="white" size={32} block mb={4}>
-          영어 자격증 풀
-        </B.BaseText>
-
-        <S.StyledCardContainer>
-          <S.StyledCardWrapper>
-            <PoolCamCard
-              streamManager={this.state.publisher}
-              imageUrl={
-                this.state.publisher
-                  ? this.state.publisher.stream.videoActive
-                    ? undefined
-                    : this.state.myThumbnail
-                  : undefined
-              }
-              exist={this.exist}
-            />
-          </S.StyledCardWrapper>
-
-          {fill(Array(5), 0).map((_, index) => (
-            <S.StyledCardWrapper key={index}>
-              <PoolCamCard
-                streamManager={
-                  this.state.subscribers.length > index ? this.state.subscribers[index] : undefined
-                }
-                imageUrl={
-                  this.state.subscribers.length > index
-                    ? this.state.thumbnails[
-                        JSON.parse(
-                          this.state.subscribers[index].stream.connection.data.split('%/%')[1],
-                        ).serverData.userId.toString()
-                      ]
-                    : undefined
-                }
-                exist={
-                  this.state.subscribers.length > index
-                    ? this.state.exists[
-                        JSON.parse(
-                          this.state.subscribers[index].stream.connection.data.split('%/%')[1],
-                        ).serverData.userId.toString()
-                      ]
-                    : undefined
-                }
-              />
-            </S.StyledCardWrapper>
-          ))}
-        </S.StyledCardContainer>
-
-        <S.StyledFooter>
-          <B.Box
-            style={{ width: 300, marginLeft: 'auto', marginRight: 'auto' }}
-            display="flex"
-            justify="space-between"
-          >
-            <S.ClickableImg
-              src={`/images/pool/video-${this.state.video ? 'on' : 'off'}.png`}
-              alt="control"
-              onClick={this.toggleVideo}
-            />
-            <S.ClickableImg
-              src={`/images/pool/mic-${this.state.audio ? 'on' : 'off'}.png`}
-              alt="control"
-              onClick={this.toggleAudio}
-            />
-            <S.ClickableImg
-              src={`/images/pool/audio-${this.state.listenMute ? 'on' : 'off'}.png`}
-              alt="control"
-              onClick={this.toggleListenMute}
-            />
-          </B.Box>
-        </S.StyledFooter>
-
-        <S.StyledDrawer
-          width="400"
-          placement="right"
-          closable={false}
-          onClose={this.props.controller.onClose}
-          visible={this.props.controller.visible}
-        >
-          <S.StyledDrawerButton onClick={() => this.props.controller.onToggleVisible()}>
-            <B.BaseText size={24} style={{ lineHeight: 100 }}>
-              {this.props.controller.visible ? <RightOutlined /> : <LeftOutlined />}
+            <B.BaseText bold type="white" size={32} block mb={4}>
+              영어 자격증 풀
             </B.BaseText>
-          </S.StyledDrawerButton>
-          <B.Box mtb={4}>
-            <B.TextCenter>
-              <img src="/images/avatar.png" alt="avater" width={140} />
-              <B.BaseText block mtb={2}>
-                <img src="/images/achieve/2.png" alt="avater" width={32} />{' '}
-                <B.BaseText pl={1} size="huge" bold>
-                  {this.props.user.nickname}
+
+            <S.StyledCardContainer>
+              <S.StyledCardWrapper>
+                <PoolCamCard
+                  streamManager={this.state.publisher}
+                  imageUrl={
+                    this.state.publisher
+                      ? this.state.publisher.stream.videoActive
+                        ? undefined
+                        : this.state.myThumbnail
+                      : undefined
+                  }
+                  exist={this.exist}
+                />
+              </S.StyledCardWrapper>
+
+              {fill(Array(5), 0).map((_, index) => (
+                <S.StyledCardWrapper key={index}>
+                  <PoolCamCard
+                    streamManager={
+                      this.state.subscribers.length > index
+                        ? this.state.subscribers[index]
+                        : undefined
+                    }
+                    imageUrl={
+                      this.state.subscribers.length > index
+                        ? this.state.thumbnails[
+                            JSON.parse(
+                              this.state.subscribers[index].stream.connection.data.split('%/%')[1],
+                            ).serverData.userId.toString()
+                          ]
+                        : undefined
+                    }
+                    exist={
+                      this.state.subscribers.length > index
+                        ? this.state.exists[
+                            JSON.parse(
+                              this.state.subscribers[index].stream.connection.data.split('%/%')[1],
+                            ).serverData.userId.toString()
+                          ]
+                        : undefined
+                    }
+                  />
+                </S.StyledCardWrapper>
+              ))}
+            </S.StyledCardContainer>
+
+            <S.StyledFooter>
+              <B.Box
+                style={{ width: 300, marginLeft: 'auto', marginRight: 'auto' }}
+                display="flex"
+                justify="space-between"
+              >
+                <S.ClickableImg
+                  src={`/images/pool/video-${this.state.video ? 'on' : 'off'}.png`}
+                  alt="control"
+                  onClick={this.toggleVideo}
+                />
+                <S.ClickableImg
+                  src={`/images/pool/mic-${this.state.audio ? 'on' : 'off'}.png`}
+                  alt="control"
+                  onClick={this.toggleAudio}
+                />
+                <S.ClickableImg
+                  src={`/images/pool/audio-${this.state.listenMute ? 'on' : 'off'}.png`}
+                  alt="control"
+                  onClick={this.toggleListenMute}
+                />
+              </B.Box>
+            </S.StyledFooter>
+
+            <S.StyledDrawer
+              width="400"
+              placement="right"
+              closable={false}
+              onClose={this.props.controller.onClose}
+              visible={this.props.controller.visible}
+            >
+              <S.StyledDrawerButton onClick={() => this.props.controller.onToggleVisible()}>
+                <B.BaseText size={24} style={{ lineHeight: 100 }}>
+                  {this.props.controller.visible ? <RightOutlined /> : <LeftOutlined />}
                 </B.BaseText>
-              </B.BaseText>
-            </B.TextCenter>
-          </B.Box>
-        </S.StyledDrawer>
-      </B.BaseTemplate>
+              </S.StyledDrawerButton>
+              <B.Box mtb={4}>
+                <B.TextCenter>
+                  <img src="/images/avatar.png" alt="avater" width={140} />
+                  <B.BaseText block mtb={2}>
+                    <img src="/images/achieve/2.png" alt="avater" width={32} />{' '}
+                    <B.BaseText pl={1} size="huge" bold>
+                      {this.props.user.nickname}
+                    </B.BaseText>
+                  </B.BaseText>
+                </B.TextCenter>
+              </B.Box>
+            </S.StyledDrawer>
+          </B.BaseTemplate>
+        </S.StyledBackgroundImageWrapper>
+      </S.StyledContent>
     )
   }
 
@@ -402,6 +408,7 @@ class PoolViewPage extends Component {
       // 기본 화면 그리기
       ctx.fillStyle = 'black'
       ctx.fillRect(0, 0, 280, 270)
+      // ctx.drawImage(this.webcam.canvas, 0, 0, 280, 270)
 
       // 이모지 그리기
       let argmax = 0
@@ -465,7 +472,7 @@ class PoolViewPage extends Component {
           console.error(e)
         }
       } else {
-        const url = `https://avatars.githubusercontent.com/u/7090906?s=460&u=eb99610a2f91ee68beadebc3f097b7fe3d035b72&v=4`
+        const url = `https://fsb.zobj.net/crop.php?r=wDSkG5kdKJnRj0U65sdleLKa8iIrnN4OjgcOuO0DpV-B4LwLpQpYp_zn3b4eD3jJjOITsSM6vjG1rKcik0LISi-PeQ2Hg7Kh1HAraWH0KK3_so2DIrDDasYhCKw1QdNTL1J7S5HUCxKsq6xj`
         this.setState({ myThumbnail: url })
         await this.state.session.signal({
           data: JSON.stringify({

@@ -7,7 +7,7 @@ export const StyledCard = styled.div`
 
   position: relative;
 
-  box-shadow: 0px 25px 20px -5px rgba(0, 0, 0, 0.24);
+  box-shadow: 0px 25px 20px -5px rgba(0, 0, 0, 0.5);
 `
 
 export const StyledVideoContent = styled.div`
