@@ -55,6 +55,9 @@ export const StyledThumbnail = styled.img`
   top: 0px;
   left: 0px;
 
+  width: 280px;
+  height: 270px;
+
   border-top-left-radius: 32px;
   border-top-right-radius: 32px;
 `

@@ -1,12 +1,13 @@
 import * as B from 'src/components'
 import * as S from './style'
-import { ClockCircleOutlined } from '@ant-design/icons'
+import { ClockCircleOutlined, MehOutlined, SmileOutlined } from '@ant-design/icons'
 import { OpenViduVideo } from '../OvVideo'
 import { useEffect, useState } from 'react'
 import { differenceInSeconds } from 'date-fns'
 import { useMemo } from 'react'
+import theme from 'src/styles/theme'
 
-export const PoolCamCard = ({ streamManager, imageUrl }) => {
+export const PoolCamCard = ({ streamManager, imageUrl, exist }) => {
   const [nickname, setNickname] = useState('')
   const [startDate, setStartDate] = useState()
   const [duration, setDuration] = useState(0)
@@ -67,13 +68,31 @@ export const PoolCamCard = ({ streamManager, imageUrl }) => {
           <S.StyledSlider />
 
           {duration > 0 && (
-            <B.BaseText mt={1} block size="small" type="optional">
-              <B.BaseText type="white" size="tiny">
-                <ClockCircleOutlined />
+            <B.Box display="flex" justify="space-between" align="center" mt={1}>
+              <B.BaseText block size="small" type="optional">
+                <B.BaseText type="white" size="tiny">
+                  <ClockCircleOutlined />
+                </B.BaseText>
+
+                <B.BaseText pl={0.5}>{durationString}</B.BaseText>
               </B.BaseText>
 
-              <B.BaseText pl={0.5}>{durationString}</B.BaseText>
-            </B.BaseText>
+              <B.Box>
+                {exist ? (
+                  <B.BaseText size="tiny" bold>
+                    <span style={{ color: theme.success }}>
+                      GOOD! <SmileOutlined />
+                    </span>
+                  </B.BaseText>
+                ) : (
+                  <B.BaseText size="tiny" bold>
+                    <span style={{ color: theme.warning }}>
+                      SOSO. <MehOutlined />
+                    </span>
+                  </B.BaseText>
+                )}
+              </B.Box>
+            </B.Box>
           )}
         </S.StyledFooter>
       </S.StyledCard>

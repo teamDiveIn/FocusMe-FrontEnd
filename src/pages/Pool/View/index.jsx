@@ -49,6 +49,7 @@ class PoolViewPage extends Component {
 
       myThumbnail: undefined,
       thumbnails: {},
+      exists: {},
     }
 
     this.canvasRef = React.createRef()
@@ -64,6 +65,9 @@ class PoolViewPage extends Component {
     this.boy2Ref = React.createRef()
     this.boy3Ref = React.createRef()
     this.boy4Ref = React.createRef()
+
+    // 화상 화면 내의 존재 여부
+    this.exist = true
   }
 
   async componentDidMount() {
@@ -130,14 +134,17 @@ class PoolViewPage extends Component {
         mySession.on('signal', (event) => {
           const data = JSON.parse(event.data)
 
-          const { userId, url } = data
+          const { userId, url, exist } = data
 
           const thumbnails = this.state.thumbnails
-
           thumbnails[userId.toString()] = url
+
+          const exists = this.state.exists
+          exists[userId.toString()] = exist
 
           this.setState({
             thumbnails,
+            exists,
           })
         })
 
@@ -255,6 +262,7 @@ class PoolViewPage extends Component {
                     : this.state.myThumbnail
                   : undefined
               }
+              exist={this.exist}
             />
           </S.StyledCardWrapper>
 
@@ -267,6 +275,15 @@ class PoolViewPage extends Component {
                 imageUrl={
                   this.state.subscribers.length > index
                     ? this.state.thumbnails[
+                        JSON.parse(
+                          this.state.subscribers[index].stream.connection.data.split('%/%')[1],
+                        ).serverData.userId.toString()
+                      ]
+                    : undefined
+                }
+                exist={
+                  this.state.subscribers.length > index
+                    ? this.state.exists[
                         JSON.parse(
                           this.state.subscribers[index].stream.connection.data.split('%/%')[1],
                         ).serverData.userId.toString()
@@ -376,6 +393,9 @@ class PoolViewPage extends Component {
       // 얼굴의 중심 좌표
       center = pose.keypoints[0].position
       // 여기서 집중 안한 경우 처리하면 됨
+      this.exist = true
+    } else {
+      this.exist = false
     }
 
     if (canvas) {
@@ -417,31 +437,45 @@ class PoolViewPage extends Component {
     const canvas = this.canvasRef.current
 
     if (canvas) {
-      try {
-        const imageDataUrl = canvas.toDataURL('image/png')
+      if (this.exist) {
+        try {
+          const imageDataUrl = canvas.toDataURL('image/png')
 
-        const { data } = await nodeApiAxios.get('/common?ext=png')
+          const { data } = await nodeApiAxios.get('/common?ext=png')
 
-        const { uploadUrl, url } = data
+          const { uploadUrl, url } = data
 
-        var blobBin = atob(imageDataUrl.split(',')[1]) // base64 데이터 디코딩
-        var array = []
-        for (var i = 0; i < blobBin.length; i++) {
-          array.push(blobBin.charCodeAt(i))
+          var blobBin = atob(imageDataUrl.split(',')[1]) // base64 데이터 디코딩
+          var array = []
+          for (var i = 0; i < blobBin.length; i++) {
+            array.push(blobBin.charCodeAt(i))
+          }
+          var file = new Blob([new Uint8Array(array)], { type: 'image/png' })
+
+          await axios.put(uploadUrl, file)
+
+          this.setState({ myThumbnail: url })
+
+          await this.state.session.signal({
+            data: JSON.stringify({ userId: this.props.user.id, url, exist: true }),
+            to: [],
+            type: 'thumbnail',
+          })
+        } catch (e) {
+          console.error(e)
         }
-        var file = new Blob([new Uint8Array(array)], { type: 'image/png' })
-
-        await axios.put(uploadUrl, file)
-
+      } else {
+        const url = `https://avatars.githubusercontent.com/u/7090906?s=460&u=eb99610a2f91ee68beadebc3f097b7fe3d035b72&v=4`
         this.setState({ myThumbnail: url })
-
         await this.state.session.signal({
-          data: JSON.stringify({ userId: this.props.user.id, url }),
+          data: JSON.stringify({
+            userId: this.props.user.id,
+            url,
+            exist: false,
+          }),
           to: [],
           type: 'thumbnail',
         })
-      } catch (e) {
-        console.error(e)
       }
     }
 
