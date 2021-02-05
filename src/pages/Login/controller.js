@@ -3,6 +3,8 @@ import { useForm } from 'antd/lib/form/Form'
 import { useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
 import { useAuthAxios } from 'src/lib/axios'
+// import { loadUser } from 'src/services/user.service'
+import storage from 'src/utils/utils.storage'
 
 export const useController = () => {
   const [form] = useForm()
@@ -20,9 +22,18 @@ export const useController = () => {
     try {
       const { data } = await login({ data: { user_id: id, password } })
       const { accessToken, refreshToken } = data.data
-      console.log(accessToken, refreshToken)
-      message.success('로그인')
-      // history.replace('/register/complete')
+
+      storage.setItem('accessToken', accessToken)
+      storage.setItem('refreshToken', refreshToken)
+
+      try {
+        // const data = await loadUser()
+      } catch (e) {
+        console.error(e)
+      }
+
+      // message.success('로그인')
+      history.replace('/')
     } catch (e) {
       const { msg, status } = e.response.data
 
