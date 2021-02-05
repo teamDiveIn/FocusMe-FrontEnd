@@ -14,6 +14,7 @@ export const BaseTemplate = ({
   backgroundColor = theme.primaryOverlay,
   headerBackgroundColor,
   verticalCenter,
+  isIntro,
 }) => {
   const { onLogout, logged, user } = useUserContext()
   return (
@@ -44,7 +45,7 @@ export const BaseTemplate = ({
           )}
         </S.StyledHeader>
       </S.StyledHeaderWrapper>
-
+      {isIntro?null:(
       <S.StyledContent
         narrow={narrow ? 'true' : undefined}
         nopadding={noPadding ? 'true' : undefined}
@@ -52,6 +53,7 @@ export const BaseTemplate = ({
       >
         {children}
       </S.StyledContent>
+      )}
     </Layout>
   )
 }
