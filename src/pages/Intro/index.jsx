@@ -35,7 +35,7 @@ const IntroPage = () => {
           <div className="container" style={{ height: "300px", textAlign: "center" }}>
             <div className="about-content">
               <div style={{ display: "block", marginBottom: "30px" }}>
-                <img src="/images/Logo_t3.png" style={{ width: "300px", display: "inline", verticalAlign: "middle", marginBottom: "30px" }}></img>
+                <img src="/images/Logo_t3.png" style={{ width: "300px", display: "inline", verticalAlign: "middle", marginBottom: "30px" }} alt="logoimage" />
                 <h3 style={{ display: "inline", verticalAlign: "middle", marginTop: "10px" }}>은 이런 분들에게 도움이 될 수 있습니다!</h3>
               </div>
               <ul>
