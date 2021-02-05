@@ -33,8 +33,7 @@ function App() {
         
         <LoggedRoute path="/mypage" component={MyPage} />
         <LoggedRoute path="/newpool" component={NewPool} />
-        <LoggedRoute path="/pool/view/:id" component={PoolViewPage} />
-        <LoggedRoute path="/pool/view" component={PoolViewPage} /> {/* 퍼블리싱용 */}
+        <LoggedRoute path="/pool/view/:sessionName" component={PoolViewPage} />
         <LoggedRoute path="/pool/list" component={PoolListPage} />
 
 

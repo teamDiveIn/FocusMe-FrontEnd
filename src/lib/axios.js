@@ -22,3 +22,15 @@ export const useAuthAxios = (url, { method, data: requestData }) => {
 
   return [{ data, loading, error, response }, execute]
 }
+
+// const NODE_API_URL = `http://localhost:3000`
+const NODE_API_URL = `https://webrtc.clubapply.com`
+
+const _nodeApiAxios = Axios.create({ baseURL: NODE_API_URL })
+_nodeApiAxios.interceptors.request.use(function (config) {
+  const accessToken = storage.getItem('accessToken')
+  if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`
+  return config
+})
+
+export const nodeApiAxios = _nodeApiAxios

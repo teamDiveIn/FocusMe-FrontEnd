@@ -31,6 +31,7 @@ a:focus {
 p {
   padding: 0;
   margin: 0 0 30px 0;
+  color: #ffffff;
 }
 
 h1,
@@ -41,6 +42,7 @@ h5,
 h6 {
   font-family: "Montserrat", sans-serif;
   font-weight: 400;
+  color: #ffffff;
   margin: 0 0 20px 0;
   padding: 0;
 }
@@ -523,9 +525,8 @@ h6 {
 
 #about .about-content h3 {
   color: #ffffff;
-  font-weight: 400;
-  font-size: 22px;
-  font-style: italic;
+  font-weight: 700;
+  font-size: 24px;
 }
 
 #about .about-content ul {
