@@ -14,7 +14,7 @@ const NewPool = () => {
     <B.BaseTemplate backgroundColor={theme.primaryOverlay} verticalCenter>
       <B.Box mlr={4} width={990}>
         <Fade bottom distance="20px" delay={50}>
-          <B.BaseCard backgroundColor={theme.primaryDark} shadow>
+          <B.BaseCard backgroundColor={theme.primaryDark} shadow style={{borderRadius:"25px"}}>
             <B.Box p={2}>
               <div style={{ marginBottom: '20px' }}>
                 <B.BaseText type="white" size={36} mb={4} style={{ marginRight: '20px' }}>
@@ -42,13 +42,13 @@ const NewPool = () => {
                       />
                     </S.StyledFormItem>
                     <S.StyledFormItem name="keyword" label="키워드">
+                    <S.StyledSelectGroup defaultValue="a" size="large">
                       <Button
                         ghost
                         style={{
-                          width: '126px',
+                          width: '120px',
                           height: '58px',
-                          borderRadius: '8px',
-                          marginRight: '10px',
+                          borderRadius: '8px'
                         }}
                       >
                         영어자격증
@@ -56,10 +56,9 @@ const NewPool = () => {
                       <Button
                         ghost
                         style={{
-                          width: '126px',
+                          width: '120px',
                           height: '58px',
-                          borderRadius: '8px',
-                          marginRight: '10px',
+                          borderRadius: '8px'
                         }}
                       >
                         디자인/예술
@@ -67,10 +66,9 @@ const NewPool = () => {
                       <Button
                         ghost
                         style={{
-                          width: '126px',
+                          width: '120px',
                           height: '58px',
-                          borderRadius: '8px',
-                          marginRight: '10px',
+                          borderRadius: '8px'
                         }}
                       >
                         컴퓨터/개발
@@ -78,10 +76,9 @@ const NewPool = () => {
                       <Button
                         ghost
                         style={{
-                          width: '126px',
+                          width: '120px',
                           height: '58px',
-                          borderRadius: '8px',
-                          marginRight: '10px',
+                          borderRadius: '8px'
                         }}
                       >
                         취미/여가
@@ -89,14 +86,14 @@ const NewPool = () => {
                       <Button
                         ghost
                         style={{
-                          width: '126px',
+                          width: '120px',
                           height: '58px',
-                          borderRadius: '8px',
-                          marginRight: '10px',
+                          borderRadius: '8px'
                         }}
                       >
                         독서
                       </Button>
+                      </S.StyledSelectGroup>
                     </S.StyledFormItem>
                   </B.Box>
                   <B.Box width={40}></B.Box>
@@ -108,13 +105,18 @@ const NewPool = () => {
 
         <Fade bottom distance="20px" delay={250}>
           <B.Box mt={4}>
-            <B.TextRight>
-              <Button type="primary" htmlType="submit" style={{ height: 50 }}>
-                <B.BaseText bold plr={4}>
-                  풀 만들기
+            <S.StyledSelectGroup defaultValue="a" size="large">
+              <Button htmlType="submit" style={{ height: 50, width:150, borderRadius:"25px"}}>
+                <B.BaseText bold plr={1}>
+                  이전
                 </B.BaseText>
               </Button>
-            </B.TextRight>
+              <Button type="primary" htmlType="submit" style={{ height: 50,  width:150, borderRadius:"25px"}}>
+                <B.BaseText bold plr={1}>
+                  Pool 만들기
+                </B.BaseText>
+              </Button>
+            </S.StyledSelectGroup>
           </B.Box>
         </Fade>
       </B.Box>
