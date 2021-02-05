@@ -1,8 +1,18 @@
 /* eslint no-undef: "off" */
-
-import { message } from "antd"
+import { useCallback, useState } from 'react'
+import { message } from 'antd'
 
 export const useController = () => {
+  const [visible, setVisible] = useState(true)
+
+  const onToggleVisible = useCallback(() => {
+    setVisible(!visible)
+  }, [visible])
+
+  const onClose = useCallback(() => {
+    setVisible(false)
+  }, [])
+
   // Model URL
   const URL = 'https://teachablemachine.withgoogle.com/models/3p4QdqNUG/'
   let model, webcam, ctx, labelContainer, maxPredictions
@@ -85,5 +95,5 @@ export const useController = () => {
     }
   }
 
-  return { init }
+  return { init, onToggleVisible, visible, onClose }
 }
