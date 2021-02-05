@@ -1,87 +1,69 @@
 import * as B from 'src/components'
-import { Form, Input, Button, Checkbox } from 'antd';
-
-const layout = {
-  labelCol: {
-    span: 8,
-  },
-  wrapperCol: {
-    span: 16,
-  },
-};
-const tailLayout = {
-  wrapperCol: {
-    offset: 8,
-    span: 16,
-  },
-};
+import { Form, Input, Button } from 'antd'
+import theme from 'src/styles/theme'
+import { LockOutlined, UserOutlined } from '@ant-design/icons'
+import { Link } from 'react-router-dom'
 
 const LoginPage = () => {
-  const onFinish = (values) => {
-    console.log('Success:', values);
-  };
-
-  const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
-  };
-
   return (
-    <B.BaseTemplate narrow>
-      <B.BaseText size={20} mb={2} block>
-        누구나 집중할수 있는
-        <br />
-        <B.BaseText type="primary" bold>
-          DiveIn
-        </B.BaseText>
-        에 오신 걸 환영합니다!
-      </B.BaseText>
-      <Form
-        {...layout}
-        name="basic"
-        initialValues={{
-          remember: true,
-        }}
-        onFinish={onFinish}
-        onFinishFailed={onFinishFailed}
-      >
-        <Form.Item
-          label="Username"
-          name="username"
-          rules={[
-            {
-              required: true,
-              message: 'Please input your username!',
-            },
-          ]}
-        >
-          <Input />
-        </Form.Item>
+    <B.BaseTemplate verticalCenter>
+      <B.Box display="flex" width="100%" style={{ justifyContent: 'space-evenly' }}>
+        <B.Box mr={2}>
+          <B.BaseCard backgroundColor={theme.primaryDark} shadow radius="5px">
+            <B.BaseForm>
+              <B.Box p={2}>
+                <B.BaseText type="white" size={28} block mb={4}>
+                  <B.TextCenter>환영합니다!</B.TextCenter>
+                </B.BaseText>
 
-        <Form.Item
-          label="Password"
-          name="password"
-          rules={[
-            {
-              required: true,
-              message: 'Please input your password!',
-            },
-          ]}
-        >
-          <Input.Password />
-        </Form.Item>
+                <Form.Item name="id">
+                  <Input
+                    prefix={
+                      <B.BaseText pr={1}>
+                        <UserOutlined />
+                      </B.BaseText>
+                    }
+                    placeholder="아이디"
+                  />
+                </Form.Item>
 
-        <Form.Item {...tailLayout} name="remember" valuePropName="checked">
-          <Checkbox>Remember me</Checkbox>
-        </Form.Item>
+                <Form.Item name="password">
+                  <Input.Password
+                    prefix={
+                      <B.BaseText pr={1}>
+                        <LockOutlined />
+                      </B.BaseText>
+                    }
+                    placeholder="비밀번호"
+                  />
+                </Form.Item>
 
-        <Form.Item {...tailLayout}>
-          <Button type="primary" htmlType="submit">
-            Submit
-        </Button>
-        </Form.Item>
-      </Form>
+                <B.Box mtb={4}>
+                  <Button type="primary" htmlType="submit" block>
+                    로그인
+                  </Button>
+                </B.Box>
+
+                <B.Box mt={4}>
+                  <B.TextCenter>
+                    <Link to="/register">
+                      <B.BaseText>혹시 DiveIn이 처음이신가요?</B.BaseText>
+                    </Link>
+                  </B.TextCenter>
+                </B.Box>
+              </B.Box>
+            </B.BaseForm>
+          </B.BaseCard>
+        </B.Box>
+        <B.Box ml={2} display="flex" style={{ flexDirection: 'column' }} justify="center">
+          <img src="/images/login/logo.png" alt="logo" width="300px" />
+          <B.BaseText type="white" block size={16} mt={2} pl={2}>
+            집중하기 어려울 땐 뭐다?
+          </B.BaseText>
+        </B.Box>
+      </B.Box>
     </B.BaseTemplate>
-  );
+  )
 }
 
 export default LoginPage
