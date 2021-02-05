@@ -48,7 +48,17 @@ class PoolViewPage extends Component {
 
     this.canvasRef = React.createRef()
     this.canvasCtx = null
-    this.imageRef = React.createRef()
+    this.girl0Ref = React.createRef()
+    this.girl1Ref = React.createRef()
+    this.girl2Ref = React.createRef()
+    this.girl3Ref = React.createRef()
+    this.girl4Ref = React.createRef()
+
+    this.boy0Ref = React.createRef()
+    this.boy1Ref = React.createRef()
+    this.boy2Ref = React.createRef()
+    this.boy3Ref = React.createRef()
+    this.boy4Ref = React.createRef()
   }
 
   async componentDidMount() {
@@ -199,7 +209,11 @@ class PoolViewPage extends Component {
         <canvas ref={this.canvasRef} width="280" height="270"></canvas>
 
         <div style={{ display: 'none' }}>
-          <img ref={this.imageRef} src="/images/memoji.png" alt="memoji" />
+          <img ref={this.girl0Ref} src="/images/memoji/0.png" alt="memoji" />
+          <img ref={this.girl1Ref} src="/images/memoji/1.png" alt="memoji" />
+          <img ref={this.girl2Ref} src="/images/memoji/2.png" alt="memoji" />
+          <img ref={this.girl3Ref} src="/images/memoji/3.png" alt="memoji" />
+          <img ref={this.girl4Ref} src="/images/memoji/4.png" alt="memoji" />
         </div>
 
         <B.BaseText bold type="white" size={32} block mb={4}>
@@ -309,8 +323,8 @@ class PoolViewPage extends Component {
 
   mlDrawPose = (pose, prediction) => {
     const canvas = this.canvasRef.current
+    if (!canvas) return
     const ctx = canvas.getContext('2d')
-    const image = this.imageRef.current
 
     // 포즈가 없음 (사람이 화면에 나오지 않음)
     let center = 0
@@ -322,23 +336,27 @@ class PoolViewPage extends Component {
 
     if (canvas) {
       // 기본 화면 그리기
-      ctx.drawImage(this.webcam.canvas, 0, 0, 280, 270)
+      ctx.fillStyle = 'black'
+      ctx.fillRect(0, 0, 280, 270)
+      
 
       // 이모지 그리기
-      // let argmax = 0
+      let argmax = 0
       let maxval = 0
       // 시선 방향 얻기 (argmax)
       for (let i = 0; i < this.maxPredictions; i++) {
         if (prediction[i].probability > maxval) {
           maxval = prediction[i].probability
-          // argmax = i
+          argmax = i
         }
       }
 
       if (center) {
+        center = pose.keypoints[0].position
         // const minPartConfidence = 0.5
         // argmax에 따라 다른 이모지 출력하는 코드 여기 작성
-        ctx.drawImage(image, center.x, center.y, 120, 120) // 이모지 그리기 (뒤에 숫자는 사이즈)
+        const image = this[`girl${argmax}Ref`].current
+        ctx.drawImage(image, center.x - 70, center.y - 70, 140, 140)
       }
 
       // 포즈 그리기
