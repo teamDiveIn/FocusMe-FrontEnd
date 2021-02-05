@@ -46,6 +46,8 @@ export const StyledNicknameWrapper = styled.div`
   padding-right: 20px;
   border-top-left-radius: 32px;
   border-top-right-radius: 32px;
+  min-width: 120px;
+  text-align: center;
 `
 
 export const StyledThumbnail = styled.img`

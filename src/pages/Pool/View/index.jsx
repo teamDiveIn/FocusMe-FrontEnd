@@ -48,6 +48,7 @@ class PoolViewPage extends Component {
       captureTimeoutKey: undefined,
 
       myThumbnail: undefined,
+      thumbnails: {},
     }
 
     this.canvasRef = React.createRef()
@@ -84,12 +85,12 @@ class PoolViewPage extends Component {
     clearTimeout(this.state.captureTimeoutKey)
 
     this.leaveSession()
-    this.webcam.stop()
+    if (this.webcam) this.webcam.stop()
   }
 
   onbeforeunload = (event) => {
     this.leaveSession()
-    this.webcam.stop()
+    if (this.webcam) this.webcam.stop()
   }
 
   deleteSubscriber = (streamManager) => {
@@ -126,13 +127,27 @@ class PoolViewPage extends Component {
           this.deleteSubscriber(event.stream.streamManager)
         })
 
+        mySession.on('signal', (event) => {
+          const data = JSON.parse(event.data)
+
+          const { userId, url } = data
+
+          const thumbnails = this.state.thumbnails
+
+          thumbnails[userId.toString()] = url
+
+          this.setState({
+            thumbnails,
+          })
+        })
+
         const { data } = await nodeApiAxios.post('/webrtc/token', {
           session: this.state.sessionName,
         })
 
         const { token } = data
 
-        await mySession.connect(token, { clientData: {} })
+        await mySession.connect(token, { clientData: { nickname: this.props.user.nickname } })
 
         let publisher = this.OV.initPublisher(undefined, {
           audioSource: undefined, // The source of audio. If undefined default microphone
@@ -248,6 +263,15 @@ class PoolViewPage extends Component {
               <PoolCamCard
                 streamManager={
                   this.state.subscribers.length > index ? this.state.subscribers[index] : undefined
+                }
+                imageUrl={
+                  this.state.subscribers.length > index
+                    ? this.state.thumbnails[
+                        JSON.parse(
+                          this.state.subscribers[index].stream.connection.data.split('%/%')[1],
+                        ).serverData.userId.toString()
+                      ]
+                    : undefined
                 }
               />
             </S.StyledCardWrapper>
@@ -410,6 +434,12 @@ class PoolViewPage extends Component {
         await axios.put(uploadUrl, file)
 
         this.setState({ myThumbnail: url })
+
+        await this.state.session.signal({
+          data: JSON.stringify({ userId: this.props.user.id, url }),
+          to: [],
+          type: 'thumbnail',
+        })
       } catch (e) {
         console.error(e)
       }
