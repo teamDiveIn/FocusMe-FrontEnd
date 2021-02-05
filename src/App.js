@@ -26,11 +26,13 @@ function App() {
         <PublicRoute path="/login" component={LoginPage} />
         <PublicRoute path="/register/complete" component={RegisterCompletePage} />
         <PublicRoute path="/register" component={RegisterPage} />
-        <PublicRoute path="/mypage" component={MyPage} />
-        <PublicRoute path="/newpool" component={NewPool} />
-        <PublicRoute path="/pool/view/:id" component={PoolViewPage} />
-        <PublicRoute path="/pool/view" component={PoolViewPage} /> {/* 퍼블리싱용 */}
-        <PublicRoute path="/pool/list" component={PoolListPage} />
+        
+        <LoggedRoute path="/mypage" component={MyPage} />
+        <LoggedRoute path="/newpool" component={NewPool} />
+        <LoggedRoute path="/pool/view/:id" component={PoolViewPage} />
+        <LoggedRoute path="/pool/view" component={PoolViewPage} /> {/* 퍼블리싱용 */}
+        <LoggedRoute path="/pool/list" component={PoolListPage} />
+
         <LoggedRoute path="/" component={HomePage} />
       </Switch>
     </BrowserRouter>

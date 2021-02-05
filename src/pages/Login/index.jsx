@@ -68,9 +68,9 @@ const LoginPage = () => {
               <B.Box ml={2}>
                 <Fade right distance="10px" delay={200}>
                   <B.Box display="flex" style={{ flexDirection: 'column' }} justify="center">
-                    <img src="/images/login/logo.png" alt="logo" width="300px" />
+                    <img src="/images/Logo_t2.png" alt="logo" width="300px" />
                     <B.BaseText type="white" block size={16} mt={2} pl={2}>
-                      집중하기 어려울 땐 뭐다?
+                      혼자 집중하기 어려울 땐? 다이브 인!
                     </B.BaseText>
                   </B.Box>
                 </Fade>
