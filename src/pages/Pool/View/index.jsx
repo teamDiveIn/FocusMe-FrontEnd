@@ -46,6 +46,8 @@ class PoolViewPage extends Component {
       videoEl: undefined,
       loopTimeoutKey: undefined, // 루프 도는 타임아웃 콜백 키
       captureTimeoutKey: undefined,
+
+      myThumbnail: undefined,
     }
 
     this.canvasRef = React.createRef()
@@ -78,8 +80,8 @@ class PoolViewPage extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('beforeunload', this.onbeforeunload)
-    clearTimeout(this.loopTimeoutKey)
-    clearTimeout(this.captureTimeoutKey)
+    clearTimeout(this.state.loopTimeoutKey)
+    clearTimeout(this.state.captureTimeoutKey)
 
     this.leaveSession()
     this.webcam.stop()
@@ -229,7 +231,16 @@ class PoolViewPage extends Component {
 
         <S.StyledCardContainer>
           <S.StyledCardWrapper>
-            <PoolCamCard streamManager={this.state.publisher} />
+            <PoolCamCard
+              streamManager={this.state.publisher}
+              imageUrl={
+                this.state.publisher
+                  ? this.state.publisher.stream.videoActive
+                    ? undefined
+                    : this.state.myThumbnail
+                  : undefined
+              }
+            />
           </S.StyledCardWrapper>
 
           {fill(Array(5), 0).map((_, index) => (
@@ -311,13 +322,13 @@ class PoolViewPage extends Component {
     await this.webcam.setup() // request access to the webcam
     await this.webcam.play()
 
-    this.captureTimeoutKey = setTimeout(this.captureImage, 5000)
+    this.state.captureTimeoutKey = setTimeout(this.captureImage, 5000)
   }
 
   mlLoop = async (timestamp) => {
     this.webcam.update()
     await this.mlPredict() // 추론 수행
-    this.loopTimeoutKey = setTimeout(this.mlLoop, 1000 / 60)
+    this.state.loopTimeoutKey = setTimeout(this.mlLoop, 1000 / 60)
   }
 
   mlPredict = async () => {
@@ -396,17 +407,15 @@ class PoolViewPage extends Component {
         }
         var file = new Blob([new Uint8Array(array)], { type: 'image/png' })
 
-        console.log(file)
-
         await axios.put(uploadUrl, file)
 
-        // console.log(data)
+        this.setState({ myThumbnail: url })
       } catch (e) {
         console.error(e)
       }
     }
 
-    this.captureTimeoutKey = setTimeout(this.captureImage, 5000)
+    this.state.captureTimeoutKey = setTimeout(this.captureImage, 5000)
   }
 }
 
