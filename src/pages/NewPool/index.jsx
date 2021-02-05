@@ -4,6 +4,7 @@ import { useController } from './contoller'
 import theme from 'src/styles/theme'
 import * as S from './style'
 import { Fade } from 'react-reveal'
+import { Link } from 'react-router-dom'
 
 const NewPool = () => {
   const { form, onSubmit } = useController()
@@ -48,11 +49,14 @@ const NewPool = () => {
 
           <Fade bottom distance="20px" delay={250}>
             <B.Box mt={4} display="flex" justify="space-between">
-              <Button style={{ height: 50, width: 150, borderRadius: '25px' }}>
-                <B.BaseText bold plr={1}>
-                  이전
-                </B.BaseText>
-              </Button>
+              <Link to="/home">
+                <Button style={{ height: 50, width: 150, borderRadius: '25px' }}>
+                  <B.BaseText bold plr={1}>
+                    이전
+                  </B.BaseText>
+                </Button>
+              </Link>
+
               <Button
                 type="primary"
                 htmlType="submit"

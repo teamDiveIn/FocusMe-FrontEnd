@@ -24,21 +24,17 @@ function App() {
   ) : (
     <BrowserRouter>
       <Switch>
-
-      
-
         <PublicRoute path="/login" component={LoginPage} />
         <PublicRoute path="/register/complete" component={RegisterCompletePage} />
         <PublicRoute path="/register" component={RegisterPage} />
-        
+
         <LoggedRoute path="/mypage" component={MyPage} />
         <LoggedRoute path="/newpool" component={NewPool} />
         <LoggedRoute path="/pool/view/:sessionName" component={PoolViewPage} />
         <LoggedRoute path="/pool/list" component={PoolListPage} />
 
-
-        <PublicRoute path="/" component={IntroPage} /> {/* intro page */}
         <LoggedRoute path="/home" component={HomePage} />
+        <PublicRoute path="/" component={IntroPage} />
       </Switch>
     </BrowserRouter>
   )
