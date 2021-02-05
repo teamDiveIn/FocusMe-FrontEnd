@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 const PoolViewPage = () => {
   const { init } = useController()
   useEffect(() => {
-    init()
+    // init()
     // eslint-disable-next-line
   }, [])
   return (
@@ -37,7 +37,17 @@ const PoolViewPage = () => {
         </S.StyledCardWrapper>
       </S.StyledCardContainer>
 
-      <S.StyledFooter>Hi Faker</S.StyledFooter>
+      <S.StyledFooter>
+        <B.Box
+          style={{ width: 300, marginLeft: 'auto', marginRight: 'auto' }}
+          display="flex"
+          justify="space-between"
+        >
+          <S.ClickableImg src="/images/pool/video-on.png" alt="control" />
+          <S.ClickableImg src="/images/pool/mic-on.png" alt="control" />
+          <S.ClickableImg src="/images/pool/audio-on.png" alt="control" />
+        </B.Box>
+      </S.StyledFooter>
     </B.BaseTemplate>
   )
 }
