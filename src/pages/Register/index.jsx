@@ -12,7 +12,7 @@ const RegisterPage = () => {
   return (
     <B.BaseTemplate backgroundColor={theme.primaryOverlay} verticalCenter>
       <B.Box mlr={4} width="100%">
-        <Fade bottom distance="20px" delay={150}>
+        <Fade bottom distance="20px">
           <B.BaseCard backgroundColor={theme.primaryDark} shadow>
             <B.Box p={2}>
               <B.BaseText type="white" size={24} block mb={4}>

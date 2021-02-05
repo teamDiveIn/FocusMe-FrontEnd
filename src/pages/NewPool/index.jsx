@@ -4,10 +4,11 @@ import { useController } from './contoller'
 import theme from 'src/styles/theme'
 import * as S from './style'
 import { Fade } from 'react-reveal'
+import { useState } from 'react'
 
 const NewPool = () => {
   const { form, onSubmit } = useController()
-  const value = 0
+  const [sliderValue] = useState([])
 
   return (
     <B.BaseTemplate backgroundColor={theme.primaryOverlay} verticalCenter>
@@ -34,7 +35,11 @@ const NewPool = () => {
                       </S.StyledRadioGroup>
                     </S.StyledFormItem>
                     <S.StyledFormItem name="capacity" label="최대 인원">
-                      <Slider value={value} />
+                      <Slider
+                        min={1}
+                        max={6}
+                        value={typeof sliderValue === 'number' ? sliderValue : 0}
+                      />
                     </S.StyledFormItem>
                     <S.StyledFormItem name="keyword" label="키워드">
                       <Button

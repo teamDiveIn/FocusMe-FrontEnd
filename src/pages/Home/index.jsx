@@ -1,4 +1,5 @@
 import * as B from 'src/components'
+import * as S from './style'
 import { Link } from 'react-router-dom'
 import { Typography } from 'antd'
 import theme from 'src/styles/theme'
@@ -10,29 +11,39 @@ const HomePage = () => {
   return (
     <B.BaseTemplate backgroundColor={theme.primaryOverlay} verticalCenter>
       <B.Box mlr={4} width="100%">
-        <Fade bottom distance="20px" delay={150}>
+        <Fade bottom distance="20px" delay={50} duration={700}>
           <Link to="/newpool">
-            <B.BaseCard backgroundColor={theme.primaryDark} shadow radius={'50px'}>
-              <B.Box p={2}>
-                <Title level={3} style={{ color: 'white' }}>
-                  새로운 풀 만들기
-                </Title>
-              </B.Box>
-            </B.BaseCard>
+            <S.StyledCardWrapper>
+              <S.StyledImgCard src="/images/pool/new-0.png" />
+              <S.StyledCardContent>
+                <B.Box p={2} width={300}>
+                  <B.TextCenter>
+                    <Title level={3} style={{ color: 'white' }}>
+                      새로운 풀 만들기
+                    </Title>
+                  </B.TextCenter>
+                </B.Box>
+              </S.StyledCardContent>
+            </S.StyledCardWrapper>
           </Link>
         </Fade>
       </B.Box>
 
       <B.Box mlr={4} width="100%">
-        <Fade bottom distance="20px" delay={150}>
+        <Fade bottom distance="20px" delay={150} duration={700}>
           <Link to="/pool/list">
-            <B.BaseCard backgroundColor={theme.primaryDark} shadow radius={'50px'}>
-              <B.Box p={2}>
-                <Title level={3} style={{ color: 'white' }}>
-                  기존 풀 입장하기
-                </Title>
-              </B.Box>
-            </B.BaseCard>
+            <S.StyledCardWrapper>
+              <S.StyledImgCard src="/images/pool/new-1.png" />
+              <S.StyledCardContent>
+                <B.Box p={2} width={300}>
+                  <B.TextCenter>
+                    <Title level={3} style={{ color: 'white' }}>
+                      기존 풀 입장하기
+                    </Title>
+                  </B.TextCenter>
+                </B.Box>
+              </S.StyledCardContent>
+            </S.StyledCardWrapper>
           </Link>
         </Fade>
       </B.Box>
