@@ -2,7 +2,7 @@ import * as B from 'src/components'
 import * as S from './style'
 import { PoolCamCard } from './PoolCamCard'
 import { useController } from './controller'
-import { Component } from 'react'
+import React, { Component } from 'react'
 import { useUserContext } from 'src/contexts/UserContext'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import { fill } from 'lodash'
@@ -33,17 +33,40 @@ class PoolViewPage extends Component {
       publisher: undefined,
       subscribers: [],
       token: undefined,
+
+      video: true,
+      audio: true,
+      listenMute: true,
+
+      // ML
+      webcam: undefined,
+      model: undefined,
+      maxPredictions: undefined,
+      videoEl: undefined,
+      loopTimeoutKey: undefined, // 루프 도는 타임아웃 콜백 키
     }
+
+    this.canvasRef = React.createRef()
+    this.canvasCtx = null
+    this.imageRef = React.createRef()
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     window.addEventListener('beforeunload', this.onbeforeunload)
 
+    // canvas 확인
+    this.canvasCtx = this.canvasRef.current.getContext('2d')
+
     this.joinSession()
+
+    // ML 돌리기
+    await this.mlInitialize()
+    await this.mlLoop()
   }
 
   componentWillUnmount() {
     window.removeEventListener('beforeunload', this.onbeforeunload)
+    clearTimeout(this.loopTimeoutKey)
 
     this.leaveSession()
   }
@@ -65,7 +88,6 @@ class PoolViewPage extends Component {
 
   joinSession = async () => {
     this.OV = new OpenVidu()
-
     this.setState(
       {
         session: this.OV.initSession(),
@@ -74,8 +96,8 @@ class PoolViewPage extends Component {
         var mySession = this.state.session
 
         mySession.on('streamCreated', (event) => {
-          var subscriber = mySession.subscribe(event.stream, undefined)
-          var subscribers = this.state.subscribers
+          const subscriber = mySession.subscribe(event.stream, undefined)
+          const subscribers = this.state.subscribers
           subscribers.push(subscriber)
 
           this.setState({
@@ -105,6 +127,11 @@ class PoolViewPage extends Component {
           insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
           mirror: false, // Whether to mirror your local video or not
         })
+
+        // publisher.on('streamPlaying', async (event) => {
+        //   const video = event.target.videos[0].video
+        //   this.videoEl = video
+        // })
 
         mySession.publish(publisher)
 
@@ -138,9 +165,43 @@ class PoolViewPage extends Component {
     })
   }
 
+  toggleVideo = () => {
+    if (this.state.publisher) {
+      this.state.publisher.publishVideo(!this.state.video)
+    }
+
+    this.setState({
+      video: !this.state.video,
+    })
+  }
+
+  toggleAudio = () => {
+    if (this.state.publisher) {
+      this.state.publisher.publishAudio(!this.state.audio)
+    }
+
+    this.setState({
+      audio: !this.state.audio,
+    })
+  }
+
+  toggleListenMute = () => {
+    this.state.subscribers.map((sub) => sub.subscribeToAudio(!this.state.listenMute))
+
+    this.setState({
+      listenMute: !this.state.listenMute,
+    })
+  }
+
   render() {
     return (
       <B.BaseTemplate>
+        <canvas ref={this.canvasRef} width="280" height="270"></canvas>
+
+        <div style={{ display: 'none' }}>
+          <img ref={this.imageRef} src="/images/memoji.png" alt="memoji" />
+        </div>
+
         <B.BaseText bold type="white" size={32} block mb={4}>
           영어 자격증 풀
         </B.BaseText>
@@ -167,9 +228,21 @@ class PoolViewPage extends Component {
             display="flex"
             justify="space-between"
           >
-            <S.ClickableImg src="/images/pool/video-on.png" alt="control" />
-            <S.ClickableImg src="/images/pool/mic-on.png" alt="control" />
-            <S.ClickableImg src="/images/pool/audio-on.png" alt="control" />
+            <S.ClickableImg
+              src={`/images/pool/video-${this.state.video ? 'on' : 'off'}.png`}
+              alt="control"
+              onClick={this.toggleVideo}
+            />
+            <S.ClickableImg
+              src={`/images/pool/mic-${this.state.audio ? 'on' : 'off'}.png`}
+              alt="control"
+              onClick={this.toggleAudio}
+            />
+            <S.ClickableImg
+              src={`/images/pool/audio-${this.state.listenMute ? 'on' : 'off'}.png`}
+              alt="control"
+              onClick={this.toggleListenMute}
+            />
           </B.Box>
         </S.StyledFooter>
 
@@ -199,6 +272,84 @@ class PoolViewPage extends Component {
         </S.StyledDrawer>
       </B.BaseTemplate>
     )
+  }
+
+  mlInitialize = async () => {
+    // Model URL
+    const URL = 'https://teachablemachine.withgoogle.com/models/B9S7LxtSs/'
+
+    const modelURL = URL + 'model.json'
+    const metadataURL = URL + 'metadata.json'
+
+    // eslint-disable-next-line
+    this.model = await tmPose.load(modelURL, metadataURL)
+    this.maxPredictions = this.model.getTotalClasses()
+
+    // eslint-disable-next-line
+    this.webcam = new tmPose.Webcam(280, 270, false) // webcam 생성
+    await this.webcam.setup() // request access to the webcam
+    await this.webcam.play()
+  }
+
+  mlLoop = async (timestamp) => {
+    this.webcam.update()
+    await this.mlPredict() // 추론 수행
+    this.loopTimeoutKey = setTimeout(this.mlLoop, 1000 / 60)
+  }
+
+  mlPredict = async () => {
+    // Prediction #1: 입력 이미지에서 pose 추론
+    // estimatePose can take in an image, video or canvas html element
+    const { pose, posenetOutput } = await this.model.estimatePose(this.webcam.canvas)
+    // Prediction 2: pose를 classification (어떤 포즈인지)
+    const prediction = await this.model.predict(posenetOutput)
+
+    this.mlDrawPose(pose, prediction)
+  }
+
+  mlDrawPose = (pose, prediction) => {
+    const canvas = this.canvasRef.current
+    const ctx = canvas.getContext('2d')
+    const image = this.imageRef.current
+
+    // 포즈가 없음 (사람이 화면에 나오지 않음)
+    let center = 0
+    if (pose) {
+      // 얼굴의 중심 좌표
+      center = pose.keypoints[0].position
+      // 여기서 집중 안한 경우 처리하면 됨
+    }
+
+    if (canvas) {
+      // 기본 화면 그리기
+      ctx.drawImage(this.webcam.canvas, 0, 0, 280, 270)
+
+      // 이모지 그리기
+      // let argmax = 0
+      let maxval = 0
+      // 시선 방향 얻기 (argmax)
+      for (let i = 0; i < this.maxPredictions; i++) {
+        if (prediction[i].probability > maxval) {
+          maxval = prediction[i].probability
+          // argmax = i
+        }
+      }
+
+      if (center) {
+        // const minPartConfidence = 0.5
+        // argmax에 따라 다른 이모지 출력하는 코드 여기 작성
+        ctx.drawImage(image, center.x, center.y, 120, 120) // 이모지 그리기 (뒤에 숫자는 사이즈)
+      }
+
+      // 포즈 그리기
+      if (pose) {
+        const minPartConfidence = 0.5
+        // eslint-disable-next-line
+        tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx)
+        // eslint-disable-next-line
+        tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx)
+      }
+    }
   }
 }
 

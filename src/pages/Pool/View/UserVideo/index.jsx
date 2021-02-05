@@ -1,9 +1,11 @@
 import { OpenViduVideo } from '../OvVideo'
 
-export const UserVideo = ({ streamManager }) => {
+export const UserVideo = ({ streamManager, onPlay }) => {
   return (
     <div>
-      {streamManager !== undefined ? <OpenViduVideo streamManager={streamManager} /> : null}
+      {streamManager !== undefined ? (
+        <OpenViduVideo streamManager={streamManager} onPlay={onPlay} />
+      ) : null}
     </div>
   )
 }

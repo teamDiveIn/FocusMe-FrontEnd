@@ -17,7 +17,7 @@ const LoginPage = () => {
             <B.Box display="flex" width="100%" style={{ justifyContent: 'space-evenly' }}>
               <B.Box mr={2}>
                 <Fade left distance="10px">
-                  <B.BaseCard backgroundColor={theme.primaryDark} shadow radius="5px">
+                  <B.BaseCard backgroundColor={theme.primaryDark} shadow radius="30px">
                     <B.BaseForm form={form} onFinish={onSubmit}>
                       <B.Box p={2}>
                         <B.BaseText type="white" size={28} block mb={4}>
