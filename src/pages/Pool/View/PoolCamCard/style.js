@@ -13,6 +13,7 @@ export const StyledCard = styled.div`
 export const StyledVideoContent = styled.div`
   position: relative;
   min-height: 270px;
+  padding-bottom: 50px;
 `
 
 export const StyledFooter = styled.div`
