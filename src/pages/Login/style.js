@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const StyledContent = styled.div`
-  background: linear-gradient(-45deg, #001b2e, #0e314a, #001b2e);
+  background: linear-gradient(-45deg, #001b2e, #113650, #001b2e, #113650, #001b2e);
   background-size: 400% 400%;
   animation: gradient 15s ease infinite;
 
