@@ -3,12 +3,13 @@ import * as S from './style'
 import { ClockCircleOutlined } from '@ant-design/icons'
 import { OpenViduVideo } from '../OvVideo'
 
-export const PoolCamCard = ({ streamManager }) => {
+export const PoolCamCard = ({ streamManager, imageUrl }) => {
   return (
     <B.Box>
       <S.StyledCard>
         <S.StyledVideoContent>
           {streamManager !== undefined ? <OpenViduVideo streamManager={streamManager} /> : null}
+          {imageUrl && <S.StyledThumbnail src={imageUrl} alt="thumbnail" />}
         </S.StyledVideoContent>
 
         <S.StyledFooter>

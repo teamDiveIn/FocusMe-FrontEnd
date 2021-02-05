@@ -8,6 +8,7 @@ import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import { fill } from 'lodash'
 import { OpenVidu } from 'openvidu-browser'
 import { nodeApiAxios } from 'src/lib/axios'
+import axios from 'axios'
 
 const withHooksHOC = (Component) => {
   return (props) => {
@@ -44,11 +45,24 @@ class PoolViewPage extends Component {
       maxPredictions: undefined,
       videoEl: undefined,
       loopTimeoutKey: undefined, // 루프 도는 타임아웃 콜백 키
+      captureTimeoutKey: undefined,
+
+      myThumbnail: undefined,
     }
 
     this.canvasRef = React.createRef()
     this.canvasCtx = null
-    this.imageRef = React.createRef()
+    this.girl0Ref = React.createRef()
+    this.girl1Ref = React.createRef()
+    this.girl2Ref = React.createRef()
+    this.girl3Ref = React.createRef()
+    this.girl4Ref = React.createRef()
+
+    this.boy0Ref = React.createRef()
+    this.boy1Ref = React.createRef()
+    this.boy2Ref = React.createRef()
+    this.boy3Ref = React.createRef()
+    this.boy4Ref = React.createRef()
   }
 
   async componentDidMount() {
@@ -66,13 +80,16 @@ class PoolViewPage extends Component {
 
   componentWillUnmount() {
     window.removeEventListener('beforeunload', this.onbeforeunload)
-    clearTimeout(this.loopTimeoutKey)
+    clearTimeout(this.state.loopTimeoutKey)
+    clearTimeout(this.state.captureTimeoutKey)
 
     this.leaveSession()
+    this.webcam.stop()
   }
 
   onbeforeunload = (event) => {
     this.leaveSession()
+    this.webcam.stop()
   }
 
   deleteSubscriber = (streamManager) => {
@@ -196,10 +213,16 @@ class PoolViewPage extends Component {
   render() {
     return (
       <B.BaseTemplate>
-        <canvas ref={this.canvasRef} width="280" height="270"></canvas>
+        <div style={{ display: 'none' }}>
+          <canvas ref={this.canvasRef} width="280" height="270"></canvas>
+        </div>
 
         <div style={{ display: 'none' }}>
-          <img ref={this.imageRef} src="/images/memoji.png" alt="memoji" />
+          <img ref={this.girl0Ref} src="/images/memoji/0.png" alt="memoji" />
+          <img ref={this.girl1Ref} src="/images/memoji/1.png" alt="memoji" />
+          <img ref={this.girl2Ref} src="/images/memoji/2.png" alt="memoji" />
+          <img ref={this.girl3Ref} src="/images/memoji/3.png" alt="memoji" />
+          <img ref={this.girl4Ref} src="/images/memoji/4.png" alt="memoji" />
         </div>
 
         <B.BaseText bold type="white" size={32} block mb={4}>
@@ -208,7 +231,16 @@ class PoolViewPage extends Component {
 
         <S.StyledCardContainer>
           <S.StyledCardWrapper>
-            <PoolCamCard streamManager={this.state.publisher} />
+            <PoolCamCard
+              streamManager={this.state.publisher}
+              imageUrl={
+                this.state.publisher
+                  ? this.state.publisher.stream.videoActive
+                    ? undefined
+                    : this.state.myThumbnail
+                  : undefined
+              }
+            />
           </S.StyledCardWrapper>
 
           {fill(Array(5), 0).map((_, index) => (
@@ -289,12 +321,14 @@ class PoolViewPage extends Component {
     this.webcam = new tmPose.Webcam(280, 270, false) // webcam 생성
     await this.webcam.setup() // request access to the webcam
     await this.webcam.play()
+
+    this.state.captureTimeoutKey = setTimeout(this.captureImage, 5000)
   }
 
   mlLoop = async (timestamp) => {
     this.webcam.update()
     await this.mlPredict() // 추론 수행
-    this.loopTimeoutKey = setTimeout(this.mlLoop, 1000 / 60)
+    this.state.loopTimeoutKey = setTimeout(this.mlLoop, 1000 / 60)
   }
 
   mlPredict = async () => {
@@ -309,8 +343,8 @@ class PoolViewPage extends Component {
 
   mlDrawPose = (pose, prediction) => {
     const canvas = this.canvasRef.current
+    if (!canvas) return
     const ctx = canvas.getContext('2d')
-    const image = this.imageRef.current
 
     // 포즈가 없음 (사람이 화면에 나오지 않음)
     let center = 0
@@ -322,34 +356,66 @@ class PoolViewPage extends Component {
 
     if (canvas) {
       // 기본 화면 그리기
-      ctx.drawImage(this.webcam.canvas, 0, 0, 280, 270)
+      ctx.fillStyle = 'black'
+      ctx.fillRect(0, 0, 280, 270)
 
       // 이모지 그리기
-      // let argmax = 0
+      let argmax = 0
       let maxval = 0
       // 시선 방향 얻기 (argmax)
       for (let i = 0; i < this.maxPredictions; i++) {
         if (prediction[i].probability > maxval) {
           maxval = prediction[i].probability
-          // argmax = i
+          argmax = i
         }
       }
 
       if (center) {
+        center = pose.keypoints[0].position
         // const minPartConfidence = 0.5
         // argmax에 따라 다른 이모지 출력하는 코드 여기 작성
-        ctx.drawImage(image, center.x, center.y, 120, 120) // 이모지 그리기 (뒤에 숫자는 사이즈)
+        const image = this[`girl${argmax}Ref`].current
+        ctx.drawImage(image, center.x - 70, center.y - 70, 140, 140)
       }
 
       // 포즈 그리기
-      if (pose) {
-        const minPartConfidence = 0.5
-        // eslint-disable-next-line
-        tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx)
-        // eslint-disable-next-line
-        tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx)
+      // if (pose) {
+      //   const minPartConfidence = 0.5
+      //   // eslint-disable-next-line
+      //   tmPose.drawKeypoints(pose.keypoints, minPartConfidence, ctx)
+      //   // eslint-disable-next-line
+      //   tmPose.drawSkeleton(pose.keypoints, minPartConfidence, ctx)
+      // }
+    }
+  }
+
+  captureImage = async () => {
+    const canvas = this.canvasRef.current
+
+    if (canvas) {
+      try {
+        const imageDataUrl = canvas.toDataURL('image/png')
+
+        const { data } = await nodeApiAxios.get('/common?ext=png')
+
+        const { uploadUrl, url } = data
+
+        var blobBin = atob(imageDataUrl.split(',')[1]) // base64 데이터 디코딩
+        var array = []
+        for (var i = 0; i < blobBin.length; i++) {
+          array.push(blobBin.charCodeAt(i))
+        }
+        var file = new Blob([new Uint8Array(array)], { type: 'image/png' })
+
+        await axios.put(uploadUrl, file)
+
+        this.setState({ myThumbnail: url })
+      } catch (e) {
+        console.error(e)
       }
     }
+
+    this.state.captureTimeoutKey = setTimeout(this.captureImage, 5000)
   }
 }
 

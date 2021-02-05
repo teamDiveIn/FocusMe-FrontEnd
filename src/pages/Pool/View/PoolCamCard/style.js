@@ -47,3 +47,12 @@ export const StyledNicknameWrapper = styled.div`
   border-top-left-radius: 32px;
   border-top-right-radius: 32px;
 `
+
+export const StyledThumbnail = styled.img`
+  position: absolute;
+  top: 0px;
+  left: 0px;
+
+  border-top-left-radius: 32px;
+  border-top-right-radius: 32px;
+`
