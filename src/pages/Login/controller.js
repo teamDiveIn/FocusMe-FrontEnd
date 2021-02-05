@@ -15,7 +15,7 @@ export const useController = () => {
 
   useEffect(() => {
     if (logged) {
-      history.replace('/')
+      history.replace('/home')
     }
   }, [logged, history])
 
@@ -38,7 +38,7 @@ export const useController = () => {
       try {
         const user = await loadUser()
         onLogin(user)
-        history.replace('/')
+        history.replace('/home')
       } catch (e) {
         console.error(e)
       }

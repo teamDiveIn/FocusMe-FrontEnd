@@ -16,7 +16,7 @@ const IntroPage = () => {
               <h2>효율적인 시간관리와 집중을 위해<br />AI가 늘 당신과 함께 </h2>
               <h3>혼자서 집중하기 어려울 땐? 다이브인! </h3>
               <div>
-                <Link to="/login">
+                <Link to="/home">
                   <Button type="primary" htmlType="submit" style={{ fontSize: "16px", width: "250px", height: "60px", borderRadius: "30px", marginLeft: "15%" }}>
                     지금 집중 시작하기
                   </Button>
