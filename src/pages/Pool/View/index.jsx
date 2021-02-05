@@ -5,9 +5,10 @@ import { useController } from './controller'
 import { useEffect } from 'react'
 import { useUserContext } from 'src/contexts/UserContext'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
+import { UserVideo } from './UserVideo'
 
 const PoolViewPage = () => {
-  const { onClose, onToggleVisible, visible } = useController()
+  const { onClose, onToggleVisible, visible, sessionData } = useController()
   const { user } = useUserContext()
 
   useEffect(() => {
@@ -21,9 +22,26 @@ const PoolViewPage = () => {
         영어 자격증 방
       </B.BaseText>
 
+      {sessionData && (
+        <B.Box>
+          <div id="video-container">
+            {sessionData.publisher !== undefined ? (
+              <div className="stream-container col-md-6 col-xs-6">
+                <UserVideo streamManager={sessionData.publisher} />
+              </div>
+            ) : null}
+            {sessionData.subscribers.map((sub, i) => (
+              <div key={i} className="stream-container col-md-6 col-xs-6">
+                <UserVideo streamManager={sub} />
+              </div>
+            ))}
+          </div>
+        </B.Box>
+      )}
+
       <S.StyledCardContainer>
         <S.StyledCardWrapper>
-          <PoolCamCard me />
+          <PoolCamCard streamManager={sessionData.mainStreamManager} />
         </S.StyledCardWrapper>
         <S.StyledCardWrapper>
           <PoolCamCard />

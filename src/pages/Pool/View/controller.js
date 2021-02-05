@@ -4,9 +4,11 @@ import { message } from 'antd'
 import { useEffect } from 'react'
 import { nodeApiAxios } from 'src/lib/axios'
 import { OpenVidu } from 'openvidu-browser'
+import { useParams } from 'react-router-dom'
 
 export const useController = () => {
   const [visible, setVisible] = useState(true)
+  const { sessionName } = useParams()
 
   const onToggleVisible = useCallback(() => {
     setVisible(!visible)
@@ -19,7 +21,7 @@ export const useController = () => {
   //////////////////////////////////////////////////////////////////////////////////////////////////////
   const [, setOV] = useState()
   const [sessionData, setSessionData] = useState({
-    sessionName: '',
+    sessionName,
     session: undefined,
     nickname: 'testNickname',
     mainStreamManager: undefined,
@@ -27,6 +29,30 @@ export const useController = () => {
     subscribers: [],
     token: undefined,
   })
+
+  const leaveSession = useCallback(async () => {
+    const mySession = sessionData.session
+
+    if (mySession) {
+      mySession.disconnect()
+    }
+
+    console.log(sessionData)
+
+    await nodeApiAxios.delete('/webrtc/token', {
+      data: { session: sessionData.sessionName, token: sessionData.token },
+    })
+
+    setOV(undefined)
+    setSessionData({
+      session: undefined,
+      subscribers: [],
+      mySessionId: 'SessionA',
+      myUserName: 'Participant' + Math.floor(Math.random() * 100),
+      mainStreamManager: undefined,
+      publisher: undefined,
+    })
+  }, [sessionData])
 
   useEffect(() => {
     const OV = new OpenVidu()
@@ -57,7 +83,6 @@ export const useController = () => {
     })
 
     async function run() {
-      const sessionName = 'test'
       const { data } = await nodeApiAxios.post('/webrtc/token', {
         session: sessionName,
       })
@@ -71,7 +96,7 @@ export const useController = () => {
         videoSource: undefined, // The source of video. If undefined default webcam
         publishAudio: true, // Whether you want to start publishing with your audio unmuted or not
         publishVideo: true, // Whether you want to start publishing with your video enabled or not
-        resolution: '640x480', // The resolution of your video
+        resolution: '280x270', // The resolution of your video
         frameRate: 30, // The frame rate of your video
         insertMode: 'APPEND', // How the video is inserted in the target element 'video-container'
         mirror: false, // Whether to mirror your local video or not
@@ -90,32 +115,12 @@ export const useController = () => {
     }
 
     run()
+
+    return () => {
+      leaveSession()
+    }
     // eslint-disable-next-line
   }, [])
-
-  const leaveSession = useCallback(async () => {
-    const mySession = sessionData.session
-
-    if (mySession) {
-      mySession.disconnect()
-    }
-
-    setOV(undefined)
-    setSessionData({
-      session: undefined,
-      subscribers: [],
-      mySessionId: 'SessionA',
-      myUserName: 'Participant' + Math.floor(Math.random() * 100),
-      mainStreamManager: undefined,
-      publisher: undefined,
-    })
-
-    // TODO: 자리를 뜰 때 node서버에
-    await nodeApiAxios.delete('/webrtc/token', {
-      session: sessionData.sessionName,
-      token: sessionData.token,
-    })
-  }, [sessionData.session, sessionData.token, sessionData.sessionName])
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -213,5 +218,5 @@ export const useController = () => {
     }
   }
 
-  return { init, onToggleVisible, visible, onClose, leaveSession }
+  return { init, onToggleVisible, visible, onClose, leaveSession, sessionData }
 }
