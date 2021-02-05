@@ -1,14 +1,23 @@
 import { message } from 'antd'
 import { useForm } from 'antd/lib/form/Form'
+import { useEffect } from 'react'
 import { useCallback } from 'react'
 import { useHistory } from 'react-router-dom'
+import { useUserContext } from 'src/contexts/UserContext'
 import { useAuthAxios } from 'src/lib/axios'
-// import { loadUser } from 'src/services/user.service'
+import { loadUser } from 'src/services/user.service'
 import storage from 'src/utils/utils.storage'
 
 export const useController = () => {
   const [form] = useForm()
   const history = useHistory()
+  const { onLogin, logged } = useUserContext()
+
+  useEffect(() => {
+    if (logged) {
+      history.replace('/')
+    }
+  }, [logged, history])
 
   const [, login] = useAuthAxios('/user/signin', {
     method: 'POST',
@@ -27,13 +36,12 @@ export const useController = () => {
       storage.setItem('refreshToken', refreshToken)
 
       try {
-        // const data = await loadUser()
+        const user = await loadUser()
+        onLogin(user)
+        history.replace('/')
       } catch (e) {
         console.error(e)
       }
-
-      // message.success('로그인')
-      history.replace('/')
     } catch (e) {
       const { msg, status } = e.response.data
 
@@ -48,7 +56,7 @@ export const useController = () => {
           message.error(msg)
       }
     }
-  }, [form, login, history])
+  }, [form, login, history, onLogin])
 
   return { form, onSubmit }
 }
