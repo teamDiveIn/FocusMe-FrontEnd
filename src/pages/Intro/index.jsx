@@ -60,7 +60,7 @@ const IntroPage = () => {
           />
         </Fade>
       </S.StyledSection>
-      <main id="main" style={{ marginLeft: '20%', marginRight: '20%' }}>
+      {/* <main id="main" style={{ marginLeft: '20%', marginRight: '20%' }}>
         <section id="about">
           <div className="container" style={{ height: '300px', textAlign: 'center' }}>
             <div className="about-content">
@@ -127,7 +127,7 @@ const IntroPage = () => {
             </div>
           </div>
         </section>
-      </main>
+      </main> */}
     </div>
   )
 }
