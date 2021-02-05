@@ -7,7 +7,7 @@ import { useUserContext } from 'src/contexts/UserContext'
 import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 
 const PoolViewPage = () => {
-  const { init, onClose, onToggleVisible, visible } = useController()
+  const { onClose, onToggleVisible, visible } = useController()
   const { user } = useUserContext()
 
   useEffect(() => {
