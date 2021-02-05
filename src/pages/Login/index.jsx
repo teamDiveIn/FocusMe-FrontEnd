@@ -5,8 +5,10 @@ import theme from 'src/styles/theme'
 import { LockOutlined, UserOutlined } from '@ant-design/icons'
 import { Link } from 'react-router-dom'
 import { Fade } from 'react-reveal'
+import { useController } from './controller'
 
 const LoginPage = () => {
+  const { onSubmit, form } = useController()
   return (
     <S.StyledContent>
       <S.StyledBackgroundImageWrapper>
@@ -16,7 +18,7 @@ const LoginPage = () => {
               <B.Box mr={2}>
                 <Fade left distance="10px">
                   <B.BaseCard backgroundColor={theme.primaryDark} shadow radius="5px">
-                    <B.BaseForm>
+                    <B.BaseForm form={form} onFinish={onSubmit}>
                       <B.Box p={2}>
                         <B.BaseText type="white" size={28} block mb={4}>
                           <B.TextCenter>환영합니다!</B.TextCenter>

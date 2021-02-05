@@ -22,13 +22,13 @@ const RegisterPage = () => {
               <B.BaseForm form={form} onFinish={onSubmit}>
                 <B.Box display="flex">
                   <B.Box style={{ flex: '1 1 auto' }}>
-                    <S.StyledFormItem name="name" label="이름">
+                    <S.StyledFormItem name="id" label="아이디" rules={[{ required: true }]}>
                       <Input />
                     </S.StyledFormItem>
-                    <S.StyledFormItem name="nickname" label="닉네임">
+                    <S.StyledFormItem name="nickname" label="닉네임" rules={[{ required: true }]}>
                       <Input />
                     </S.StyledFormItem>
-                    <S.StyledFormItem name="password" label="비밀번호">
+                    <S.StyledFormItem name="password" label="비밀번호" rules={[{ required: true }]}>
                       <Input.Password />
                     </S.StyledFormItem>
                   </B.Box>
