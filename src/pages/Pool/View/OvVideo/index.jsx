@@ -20,6 +20,6 @@ export class OpenViduVideo extends Component {
   }
 
   render() {
-    return <S.StyledVideo autoPlay={true} ref={this.videoRef} />
+    return <S.StyledVideo autoPlay={true} ref={this.videoRef} onPlay={this.props.onPlay} />
   }
 }
