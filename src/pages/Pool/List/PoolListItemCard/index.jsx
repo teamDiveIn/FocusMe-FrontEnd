@@ -7,7 +7,7 @@ export const PoolListItemCard = () => {
   const history = useHistory()
   return (
     <B.Box mb={2}>
-      <B.BaseCard radius="5px" clickable onClick={() => history.push('/pool/view/pro')}>
+      <B.BaseCard radius="5px" clickable onClick={() => history.push('/pool/view/pro1')}>
         <B.Box display="flex" justify="space-between" align="center">
           <B.Box>
             <B.BaseText block size="big">

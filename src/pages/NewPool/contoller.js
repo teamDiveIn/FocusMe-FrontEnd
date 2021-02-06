@@ -11,7 +11,7 @@ export const useController = () => {
 
     console.log(updatedForm)
 
-    history.replace('/pool/view')
+    history.replace('/pool/view/newpro')
   }, [form, history])
   return { form, onSubmit }
 }
