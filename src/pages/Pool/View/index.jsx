@@ -251,6 +251,12 @@ class PoolViewPage extends Component {
               <img ref={this.girl2Ref} src="/images/memoji/2.png" alt="memoji" />
               <img ref={this.girl3Ref} src="/images/memoji/3.png" alt="memoji" />
               <img ref={this.girl4Ref} src="/images/memoji/4.png" alt="memoji" />
+
+              <img ref={this.boy0Ref} src="/images/memoji/00.png" alt="memoji" />
+              <img ref={this.boy1Ref} src="/images/memoji/01.png" alt="memoji" />
+              <img ref={this.boy2Ref} src="/images/memoji/02.png" alt="memoji" />
+              <img ref={this.boy3Ref} src="/images/memoji/03.png" alt="memoji" />
+              <img ref={this.boy4Ref} src="/images/memoji/04.png" alt="memoji" />
             </div>
 
             <B.BaseText bold type="white" size={32} block mb={4}>
@@ -505,8 +511,9 @@ class PoolViewPage extends Component {
         center = pose.keypoints[0].position
         // const minPartConfidence = 0.5
         // argmax에 따라 다른 이모지 출력하는 코드 여기 작성
-        const image = this[`girl${argmax}Ref`].current
-        ctx.drawImage(image, center.x - 70, center.y - 70, 140, 140)
+        const gender = this.props.user.id % 2 === 0 ? 'girl' : 'boy'
+        const image = this[`${gender}${argmax}Ref`].current
+        ctx.drawImage(image, center.x - 55, center.y - 55, 110, 110)
       }
 
       // 포즈 그리기
