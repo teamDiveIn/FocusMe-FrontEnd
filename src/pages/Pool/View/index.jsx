@@ -54,6 +54,7 @@ class PoolViewPage extends Component {
       exists: {},
 
       focusDuration: 0,
+      gender: Math.random() > 0.5 ? 'girl' : 'boy'
     }
 
     this.canvasRef = React.createRef()
@@ -511,8 +512,7 @@ class PoolViewPage extends Component {
         center = pose.keypoints[0].position
         // const minPartConfidence = 0.5
         // argmax에 따라 다른 이모지 출력하는 코드 여기 작성
-        const gender = this.props.user.id % 2 === 0 ? 'girl' : 'boy'
-        const image = this[`${gender}${argmax}Ref`].current
+        const image = this[`${this.state.gender}${argmax}Ref`].current
         ctx.drawImage(image, center.x - 55, center.y - 55, 110, 110)
       }
 
@@ -559,7 +559,7 @@ class PoolViewPage extends Component {
           console.error(e)
         }
       } else {
-        const url = `https://fsb.zobj.net/crop.php?r=wDSkG5kdKJnRj0U65sdleLKa8iIrnN4OjgcOuO0DpV-B4LwLpQpYp_zn3b4eD3jJjOITsSM6vjG1rKcik0LISi-PeQ2Hg7Kh1HAraWH0KK3_so2DIrDDasYhCKw1QdNTL1J7S5HUCxKsq6xj`
+        const url = `https://divein-object.s3.ap-northeast-2.amazonaws.com/uploads/empty.png`
         this.setState({ myThumbnail: url })
         await this.state.session.signal({
           data: JSON.stringify({
