@@ -8,7 +8,9 @@ import { LeftOutlined, RightOutlined } from '@ant-design/icons'
 import { fill } from 'lodash'
 import { OpenVidu } from 'openvidu-browser'
 import { nodeApiAxios } from 'src/lib/axios'
+import { Button } from 'antd'
 import axios from 'axios'
+import { differenceInSeconds } from 'date-fns'
 
 const withHooksHOC = (Component) => {
   return (props) => {
@@ -50,6 +52,9 @@ class PoolViewPage extends Component {
       myThumbnail: undefined,
       thumbnails: {},
       exists: {},
+
+      focusDuration: 0,
+      gender: Math.random() > 0.5 ? 'girl' : 'boy'
     }
 
     this.canvasRef = React.createRef()
@@ -238,7 +243,7 @@ class PoolViewPage extends Component {
         <S.StyledBackgroundImageWrapper>
           <B.BaseTemplate backgroundColor="transparent">
             <div style={{ display: 'none' }}>
-            <canvas ref={this.canvasRef} width="280" height="270"></canvas>
+              <canvas ref={this.canvasRef} width="280" height="270"></canvas>
             </div>
 
             <div style={{ display: 'none' }}>
@@ -247,10 +252,16 @@ class PoolViewPage extends Component {
               <img ref={this.girl2Ref} src="/images/memoji/2.png" alt="memoji" />
               <img ref={this.girl3Ref} src="/images/memoji/3.png" alt="memoji" />
               <img ref={this.girl4Ref} src="/images/memoji/4.png" alt="memoji" />
+
+              <img ref={this.boy0Ref} src="/images/memoji/00.png" alt="memoji" />
+              <img ref={this.boy1Ref} src="/images/memoji/01.png" alt="memoji" />
+              <img ref={this.boy2Ref} src="/images/memoji/02.png" alt="memoji" />
+              <img ref={this.boy3Ref} src="/images/memoji/03.png" alt="memoji" />
+              <img ref={this.boy4Ref} src="/images/memoji/04.png" alt="memoji" />
             </div>
 
             <B.BaseText bold type="white" size={32} block mb={4}>
-              영어 자격증 풀
+              저랑 코딩하실 분
             </B.BaseText>
 
             <S.StyledCardContainer>
@@ -300,6 +311,7 @@ class PoolViewPage extends Component {
             </S.StyledCardContainer>
 
             <S.StyledFooter>
+              <B.Box width={100}></B.Box>
               <B.Box
                 style={{ width: 300, marginLeft: 'auto', marginRight: 'auto' }}
                 display="flex"
@@ -320,6 +332,25 @@ class PoolViewPage extends Component {
                   alt="control"
                   onClick={this.toggleListenMute}
                 />
+              </B.Box>
+              <B.Box width={100}>
+                <Button
+                  type="primary"
+                  style={{ height: 50, borderRadius: 25 }}
+                  block
+                  onClick={() => {
+                    this.props.controller.setExitVisible(true)
+
+                    // 집중 시간 계산
+                    const connection = this.state.publisher.stream.connection
+                    const serverData = JSON.parse(connection.data.split('%/%')[1]).serverData
+                    const startDate = new Date(serverData.startedAt)
+
+                    this.setState({ focusDuration: differenceInSeconds(new Date(), startDate) })
+                  }}
+                >
+                  집중 끝
+                </Button>
               </B.Box>
             </S.StyledFooter>
 
@@ -347,6 +378,62 @@ class PoolViewPage extends Component {
                 </B.TextCenter>
               </B.Box>
             </S.StyledDrawer>
+
+            <S.StyledModal
+              visible={this.props.controller.exitVisible}
+              onCancel={this.props.controller.onExitClose}
+              closable={false}
+              width={840}
+              centered
+            >
+              <B.Box display="flex" plr={4} ptb={8}>
+                <B.Box style={{ flex: '1 1 auto' }} mt={4}>
+                  <B.TextCenter>
+                    <B.BaseText type="white" bold size={40} block mb={0.5}>
+                      오늘의 보상이 도착했습니다
+                    </B.BaseText>
+                    <B.BaseText type="white" size={20} mb={2}>
+                      하루 목표 집중시간을 다 채우셨군요! 멋져요
+                    </B.BaseText>
+
+                    <B.Center>
+                      <B.Box
+                        display="flex"
+                        justify="space-between"
+                        width={300}
+                        mt={4}
+                        style={{ background: 'rgba(255,255,255,0.1)', padding: '10px 40px' }}
+                      >
+                        <B.Box>
+                          <B.BaseText size={16}>
+                            <span style={{ color: '#FAD679' }}>오늘 집중한 시간</span>
+                          </B.BaseText>
+                        </B.Box>
+                        <B.Box>
+                          <B.BaseText size={16}>
+                            <span style={{ color: '#FAD679' }}>{`${Math.floor(
+                              this.state.focusDuration / 60,
+                            )}분 ${this.state.focusDuration % 60}초`}</span>
+                          </B.BaseText>
+                        </B.Box>
+                      </B.Box>
+                    </B.Center>
+                  </B.TextCenter>
+                </B.Box>
+                <B.Box style={{ flex: '0 0 160px' }} ml={4}>
+                  <img src="/images/achieve/02.png" alt="reward" width={160} />
+                </B.Box>
+              </B.Box>
+              <B.Box mt={2} mb={4}>
+                <B.TextCenter>
+                  <Button type="primary" style={{ height: 50, borderRadius: 25 }}>
+                    <B.BaseText plr={10} size={20} bold onClick={this.props.controller.onExitClose}>
+                      확인
+                    </B.BaseText>
+                  </Button>
+                </B.TextCenter>
+              </B.Box>
+            </S.StyledModal>
           </B.BaseTemplate>
         </S.StyledBackgroundImageWrapper>
       </S.StyledContent>
@@ -425,8 +512,8 @@ class PoolViewPage extends Component {
         center = pose.keypoints[0].position
         // const minPartConfidence = 0.5
         // argmax에 따라 다른 이모지 출력하는 코드 여기 작성
-        const image = this[`girl${argmax}Ref`].current
-        ctx.drawImage(image, center.x - 70, center.y - 70, 140, 140)
+        const image = this[`${this.state.gender}${argmax}Ref`].current
+        ctx.drawImage(image, center.x - 55, center.y - 55, 110, 110)
       }
 
       // 포즈 그리기
@@ -472,7 +559,7 @@ class PoolViewPage extends Component {
           console.error(e)
         }
       } else {
-        const url = `https://fsb.zobj.net/crop.php?r=wDSkG5kdKJnRj0U65sdleLKa8iIrnN4OjgcOuO0DpV-B4LwLpQpYp_zn3b4eD3jJjOITsSM6vjG1rKcik0LISi-PeQ2Hg7Kh1HAraWH0KK3_so2DIrDDasYhCKw1QdNTL1J7S5HUCxKsq6xj`
+        const url = `https://divein-object.s3.ap-northeast-2.amazonaws.com/uploads/empty.png`
         this.setState({ myThumbnail: url })
         await this.state.session.signal({
           data: JSON.stringify({

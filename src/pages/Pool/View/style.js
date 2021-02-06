@@ -1,4 +1,4 @@
-import { Drawer } from 'antd'
+import { Drawer, Modal } from 'antd'
 import styled from 'styled-components'
 
 export const StyledCardContainer = styled.div`
@@ -27,6 +27,9 @@ export const StyledFooter = styled.footer`
   border-top-left-radius: 32px;
   border-top-right-radius: 32px;
   box-shadow: 0px -5px 10px -3px rgba(0, 0, 0, 0.4);
+
+  display: flex;
+  align-items: center;
 `
 
 export const ClickableImg = styled.img`
@@ -98,5 +101,18 @@ export const StyledBackgroundImageWrapper = styled.div`
     background-size: cover;
     background-position: center;
     opacity: 0.05;
+  }
+`
+
+export const StyledModal = styled(Modal)`
+  .ant-modal-content {
+    background: #032642;
+    box-shadow: 0px 25px 25px rgba(0, 0, 0, 0.5);
+    .ant-modal-body {
+    }
+
+    .ant-modal-footer {
+      display: none;
+    }
   }
 `
