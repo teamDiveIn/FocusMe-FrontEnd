@@ -14,11 +14,11 @@ const PoolListPage = () => {
                 풀 목록
               </B.BaseText>
 
-              <PoolListItemCard />
-              <PoolListItemCard />
-              <PoolListItemCard />
-              <PoolListItemCard />
-              <PoolListItemCard />
+              <PoolListItemCard title="조용히 공부하실 분 들어오세요~" mode={1} peoplestatus="5 / 6"/>
+              <PoolListItemCard title="우리 같이 공부해요!" mode={1} peoplestatus="2 / 6"/>
+              <PoolListItemCard title="컴퓨터활용능력 1급 스터디" peoplestatus="5 / 6"/>
+              <PoolListItemCard title="ㅇㅇ초등학교 4-2 공부방 *^^*" mode={1} peoplestatus="6 / 6"/>
+              <PoolListItemCard title="집중력 고수들의 방" peoplestatus="2 / 3"/>
             </B.Box>
           </B.BaseCard>
         </Fade>
